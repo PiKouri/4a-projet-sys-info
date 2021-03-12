@@ -2,6 +2,10 @@ SRCC:= ./src/*.c
 
 all: compilateur
 
+lex: ./src/compilateur.l
+	lex ./src/compilateur.l
+	gcc lex.yy.c -Isrc -o ex_lex
+
 compilateur: ./src/compilateur.y ./src/compilateur.l ./src/instructions.c
 	yacc -d ./src/compilateur.y
 	lex ./src/compilateur.l
