@@ -1,0 +1,11 @@
+main()
+{ int i, j,k ,r;
+const b = 12, a=13;
+i =3 ;
+j=4 ;
+k=8 ;
+printf("Test");
+printf (i) ;
+r=(i+j)*(i+k/j) ;
+printf ( r ) ;
+}

@@ -18,6 +18,7 @@
 
 %token <nb> tNB
 %token <str> tID
+%token <str> tSTRING
 %token <str> tERROR
 
 %%
@@ -36,8 +37,10 @@ Instructions:
     ;
 
 Instruction:
-    tCONST Consts tPOINTVIRGULE {printf("Consts\n");}
-    | tINT Ids tPOINTVIRGULE
+    tCONST ConstIds PointVirgule {printf("Declaration Consts: ");}
+    | tINT Ids PointVirgule {printf("Declaration ints: ");}
+    | Ass PointVirgule
+    | tPRINTF tPO Arg tPF tPOINTVIRGULE {printf("printf()\n");}
     ;
 
 /*    tADD tNB tNB tNB
@@ -67,26 +70,37 @@ Instruction:
     ;
 */
 
+PointVirgule:
+    tPOINTVIRGULE {printf("\n");}
+    ;
+
 Ids:
     Id
     | Id tVIRGULE Ids
     ;
 
 Id:
-    tID
-    | tID tEQ tNB
+    tID {printf("%s",$1);}
+    | tID tEQ tNB {printf("%s ass %d",$1,$3);}
     ; 
 
-Consts:
-    Const
-    | Const tVIRGULE Consts
+Ass: 
+    tID tEQ tNB {printf("%s ass %d",$1,$3);}
     ;
 
-Const:
+ConstIds:
+    ConstId
+    | ConstId tVIRGULE ConstIds
+    ;
+
+ConstId:
+    tID tEQ tNB {printf("const ass NB ");}
+    ;
+
+Arg:
     tID
-    | tID tEQ tNB
+    | tSTRING
     ;
-
 
 %%
 

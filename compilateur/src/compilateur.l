@@ -24,11 +24,12 @@ vNewLine {return tNewLine;}
 \, {return tVIRGULE;}
 \; {return tPOINTVIRGULE;}
 printf {return tPRINTF;}
-[0-9]+(e[0-9]+)? {return tNB;}
-[a-zA-Z][_a-zA-Z0-9]* {return tID;}
+[0-9]+(e[0-9]+)? {yylval.nb = atoi(yytext); return tNB;}
+\".*\" {strcpy(yylval.str,yytext);return tSTRING;}
+[a-zA-Z][_a-zA-Z0-9]* {strcpy(yylval.str,yytext); return tID;}
 . {return tERROR;}
 
 %%
 
 int yywrap(void){return 1;}
-int main(int argc, char *argv[]) { while (yylex()!=0) ; return 0; }
+//int main(int argc, char *argv[]) { while (yylex()!=0) ; return 0; }
