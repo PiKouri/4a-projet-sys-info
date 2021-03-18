@@ -61,10 +61,23 @@ extern int yydebug;
     tVIRGULE = 271,
     tPOINTVIRGULE = 272,
     tPRINTF = 273,
-    tNB = 274,
-    tID = 275,
-    tSTRING = 276,
-    tERROR = 277
+    tBREAK = 274,
+    tCONTINUE = 275,
+    tIF = 276,
+    tWHILE = 277,
+    tELSE = 278,
+    tNOT = 279,
+    tISEQ = 280,
+    tISDIF = 281,
+    tAND = 282,
+    tOR = 283,
+    tINF = 284,
+    tSUP = 285,
+    tINFEQ = 286,
+    tSUPEQ = 287,
+    tNB = 288,
+    tID = 289,
+    tERROR = 290
   };
 #endif
 /* Tokens.  */
@@ -84,10 +97,23 @@ extern int yydebug;
 #define tVIRGULE 271
 #define tPOINTVIRGULE 272
 #define tPRINTF 273
-#define tNB 274
-#define tID 275
-#define tSTRING 276
-#define tERROR 277
+#define tBREAK 274
+#define tCONTINUE 275
+#define tIF 276
+#define tWHILE 277
+#define tELSE 278
+#define tNOT 279
+#define tISEQ 280
+#define tISDIF 281
+#define tAND 282
+#define tOR 283
+#define tINF 284
+#define tSUP 285
+#define tINFEQ 286
+#define tSUPEQ 287
+#define tNB 288
+#define tID 289
+#define tERROR 290
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -100,7 +126,7 @@ union YYSTYPE
     char str[100]; // A voir
     
 
-#line 104 "y.tab.h" /* yacc.c:1909  */
+#line 130 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

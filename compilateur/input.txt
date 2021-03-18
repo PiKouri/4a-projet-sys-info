@@ -4,8 +4,11 @@ const b = 12, a=13;
 i =3 ;
 j=4 ;
 k=8 ;
-printf("Test");
 printf (i) ;
 r=(i+j)*(i+k/j) ;
+r<3>p;
 printf ( r ) ;
+if (i==2) i=3;
+else b=2;
+while (1) {printf(2);}
 }

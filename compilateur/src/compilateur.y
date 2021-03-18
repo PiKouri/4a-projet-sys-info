@@ -14,11 +14,11 @@
     
 }
 
-%token tMAIN tAO tAF tCONST tINT tPLUS tMOINS tMULTIPLIER tDIVISER tEQ tPO tPF tNewLine tVIRGULE tPOINTVIRGULE tPRINTF
+%token tMAIN tAO tAF tCONST tINT tPLUS tMOINS tMULTIPLIER tDIVISER tEQ tPO tPF tNewLine tVIRGULE tPOINTVIRGULE tPRINTF tBREAK tCONTINUE tIF tWHILE tELSE tNOT tISEQ tISDIF tAND tOR tINF tSUP tINFEQ tSUPEQ
 
 %token <nb> tNB
 %token <str> tID
-%token <str> tSTRING
+// %token <str> tSTRING
 %token <str> tERROR
 
 %%
@@ -26,80 +26,87 @@
 %start File;
 
 File:
-    tMAIN tPO tPF Bloc;
+    tMAIN tPO tPF tAO Declarations Instructions tAF;
 
 Bloc:
     tAO Instructions tAF;
 
+Declarations:
+    /* epsilon */
+    | {printf("Declaration ");} Declaration Declarations
+    ;
+
+Declaration:
+    tCONST {printf("consts ");} Ids tPOINTVIRGULE
+    | tINT {printf("ints ");} Ids tPOINTVIRGULE
+    ;
+
 Instructions:
     /* epsilon */
-    | Instructions Instruction
+    | Bloc Instructions
+    | Instruction Instructions
     ;
 
 Instruction:
-    tCONST ConstIds PointVirgule {printf("Declaration Consts: ");}
-    | tINT Ids PointVirgule {printf("Declaration ints: ");}
-    | Ass PointVirgule
-    | tPRINTF tPO Arg tPF tPOINTVIRGULE {printf("printf()\n");}
+    {printf("Expr ");} Expr tPOINTVIRGULE
+    | {printf("printf(");} tPRINTF tPO Arg tPF {printf(")");} tPOINTVIRGULE
+    | If Bloc
+    | If Expr tPOINTVIRGULE
+    | If Bloc tELSE Bloc
+    | If Expr tPOINTVIRGULE tELSE Bloc
+    | If Bloc tELSE Expr tPOINTVIRGULE
+    | If Expr tPOINTVIRGULE tELSE Expr tPOINTVIRGULE
+    | While Bloc
+    | While Expr tPOINTVIRGULE
     ;
 
-/*    tADD tNB tNB tNB
-        {asm_add_3(ADD, $2, $3, $4);}
-    | tMUL tNB tNB tNB
-        {asm_add_3(MUL, $2, $3, $4);}
-    | tSOU tNB tNB tNB
-        {asm_add_3(SOU, $2, $3, $4);}
-    | tDIV tNB tNB tNB
-        {asm_add_3(DIV, $2, $3, $4);}
-    | tCOP tNB tNB
-        {asm_add_2(COP, $2, $3);}
-    | tAFC tNB tNB
-        {asm_add_2(AFC, $2, $3);}
-    | tJMP tNB
-        {asm_add_1(JMP, $2);}
-    | tJMF tNB tNB
-        {asm_add_2(JMF, $2, $3);}
-    | tINF tNB tNB tNB
-        {asm_add_3(INF, $2, $3, $4);}
-    | tSUP tNB tNB tNB
-        {asm_add_3(SUP, $2, $3, $4);}
-    | tEQU tNB tNB tNB
-        {asm_add_3(EQU, $2, $3, $4);}
-    | tPRI tNB
-        {asm_add_1(PRI, $2);}
+If:
+    {printf("If ");} tIF tPO Expr tPF
     ;
-*/
 
-PointVirgule:
-    tPOINTVIRGULE {printf("\n");}
+While:
+    {printf("While ");}tWHILE tPO Expr tPF
     ;
 
 Ids:
     Id
-    | Id tVIRGULE Ids
+    | Id tVIRGULE {printf(",");} Ids
     ;
 
 Id:
     tID {printf("%s",$1);}
-    | tID tEQ tNB {printf("%s ass %d",$1,$3);}
+    | Ass
     ; 
 
 Ass: 
-    tID tEQ tNB {printf("%s ass %d",$1,$3);}
+    tID tEQ {printf("%s ass expr ",$1);} Expr
     ;
 
-ConstIds:
-    ConstId
-    | ConstId tVIRGULE ConstIds
-    ;
+Expr:
+    Ass
+    | tNB {printf("%d",$1);}
+    | tID {printf("%s",$1);}
+    | {printf("(");}tPO Expr tPF {printf(")");}
+    | Expr {printf("+");} tPLUS Expr
+    | Expr {printf("-");} tMOINS Expr
+    | Expr {printf("/");} tMULTIPLIER Expr
+    | Expr {printf("*");} tDIVISER Expr
 
-ConstId:
-    tID tEQ tNB {printf("const ass NB ");}
+    | tNOT {printf("!");} Expr    
+    | Expr {printf("==");} tISEQ Expr
+    | Expr {printf("!=");} tISDIF Expr
+    | Expr {printf("&&");} tAND Expr
+    | Expr {printf("||");} tOR Expr
+    | Expr {printf("<");} tINF Expr
+    | Expr {printf(">");} tSUP Expr
+    | Expr {printf("<=");} tINFEQ Expr
+    | Expr {printf(">=");} tSUPEQ Expr
     ;
 
 Arg:
-    tID
-    | tSTRING
+    tID {printf("%s",$1);}
+    | tNB {printf("%d",$1);}
+ //   | tSTRING {printf("%s",$1);}
     ;
 
 %%

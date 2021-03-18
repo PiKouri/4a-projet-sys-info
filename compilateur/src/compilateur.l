@@ -31,13 +31,24 @@ while {return tWHILE;}
 \( {return tPO;}
 \) {return tPF;}
 
+\! {return tNOT;}
+"==" {return tISEQ;}
+"!=" {return tISDIF;}
+"&&" {return tAND;}
+"||" {return tOR;}
+"<" {return tINF;}
+">" {return tSUP;}
+"<=" {return tINFEQ;}
+">=" {return tSUPEQ;}
+
+
 vNewLine {return tNewLine;}
 \, {return tVIRGULE;}
 \; {return tPOINTVIRGULE;}
 
 printf {return tPRINTF;}
 [0-9]+(e[0-9]+)? {yylval.nb = atoi(yytext); return tNB;}
-\".*\" {strcpy(yylval.str,yytext);return tSTRING;}
+
 [a-zA-Z][_a-zA-Z0-9]* {strcpy(yylval.str,yytext); return tID;}
 . {return tERROR;}
 
@@ -47,6 +58,10 @@ int yywrap(void){return 1;}
 //int main(int argc, char *argv[]) { while (yylex()!=0) ; return 0; }
 
 /*
+
+Strings
+
+\".*\" {strcpy(yylval.str,yytext);return tSTRING;}
 
 ADDED token : tBREAK, tCONTINUE, tIF, tELSE, tWHILE
 
