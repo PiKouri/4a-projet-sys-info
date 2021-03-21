@@ -10,5 +10,5 @@ r<3>p;
 printf ( r ) ;
 if (i==2) i=3;
 else b=2;
-while (1) {printf(2);}
+while (1) {printf(a);}
 }

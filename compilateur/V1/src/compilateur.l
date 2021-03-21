@@ -1,15 +1,27 @@
 %{
-    #include "y.tab.h"
+	#include "y.tab.h"
 %}
 
 vSEP    [ \t]
 vNewLine [\n\r]
 
+%option yylineno
+
 %%
 
 {vSEP}  {}
+vNewLine {}
+\n {}
+\, {return tVIRGULE;}
+\; {return tPOINTVIRGULE;}
 
 "main" {return tMAIN;}
+
+\( {return tPO;}
+\) {return tPF;}
+\{ {return tAO;}
+\} {return tAF;}
+
 const {return tCONST;}
 int {return tINT;}
 
@@ -19,17 +31,11 @@ if {return tIF;}
 else {return tELSE;}
 while {return tWHILE;}
 
-
-\{ {return tAO;}
-\} {return tAF;}
-
+\= {return tEGAL;}
 \+ {return tPLUS;}
 \- {return tMOINS;}
 \* {return tMULTIPLIER;}
 \/ {return tDIVISER;}
-\= {return tEQ;}
-\( {return tPO;}
-\) {return tPF;}
 
 \! {return tNOT;}
 "==" {return tISEQ;}
@@ -41,15 +47,11 @@ while {return tWHILE;}
 "<=" {return tINFEQ;}
 ">=" {return tSUPEQ;}
 
-
-vNewLine {return tNewLine;}
-\, {return tVIRGULE;}
-\; {return tPOINTVIRGULE;}
-
 printf {return tPRINTF;}
-[0-9]+(e[0-9]+)? {yylval.nb = atoi(yytext); return tNB;}
 
+[0-9]+(e[0-9]+)? {yylval.nb = atoi(yytext); return tNB;}
 [a-zA-Z][_a-zA-Z0-9]* {strcpy(yylval.str,yytext); return tID;}
+
 . {return tERROR;}
 
 %%
@@ -62,25 +64,5 @@ int yywrap(void){return 1;}
 Strings
 
 \".*\" {strcpy(yylval.str,yytext);return tSTRING;}
+*/
 
-ADDED token : tBREAK, tCONTINUE, tIF, tELSE, tWHILE
-
-DONE :
-main
-int
-const
-break
-else
-const
-continue
-while
-if
-
-OPT:
-return {return tRETURN;}
-void
-switch
-case
-char
-for
-do*/

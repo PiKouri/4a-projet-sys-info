@@ -162,8 +162,27 @@ extern FILE *yyin, *yyout;
 #define EOB_ACT_END_OF_FILE 1
 #define EOB_ACT_LAST_MATCH 2
     
-    #define YY_LESS_LINENO(n)
-    #define YY_LINENO_REWIND_TO(ptr)
+    /* Note: We specifically omit the test for yy_rule_can_match_eol because it requires
+     *       access to the local variable yy_act. Since yyless() is a macro, it would break
+     *       existing scanners that call yyless() from OUTSIDE yylex.
+     *       One obvious solution it to make yy_act a global. I tried that, and saw
+     *       a 5% performance hit in a non-yylineno scanner, because yy_act is
+     *       normally declared as a register variable-- so it is not worth it.
+     */
+    #define  YY_LESS_LINENO(n) \
+            do { \
+                int yyl;\
+                for ( yyl = n; yyl < yyleng; ++yyl )\
+                    if ( yytext[yyl] == '\n' )\
+                        --yylineno;\
+            }while(0)
+    #define YY_LINENO_REWIND_TO(dst) \
+            do {\
+                const char *p;\
+                for ( p = yy_cp-1; p >= (dst); --p)\
+                    if ( *p == '\n' )\
+                        --yylineno;\
+            }while(0)
     
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
@@ -351,8 +370,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 35
-#define YY_END_OF_BUFFER 36
+#define YY_NUM_RULES 36
+#define YY_END_OF_BUFFER 37
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -362,14 +381,14 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[82] =
     {   0,
-        0,    0,   36,   34,    1,   35,   19,   34,   17,   18,
-       14,   12,   29,   13,   15,   32,   30,   24,   16,   25,
-       33,   33,   33,   33,   33,   33,   33,   33,   33,   10,
-       34,   11,   21,   22,   32,    0,   26,   20,   27,   33,
-       33,   33,   33,    7,   33,   33,   33,   33,   33,   23,
-       32,   33,   33,   33,    4,   33,   33,   33,   33,   33,
-       33,   33,    8,    2,   33,   33,   33,    5,    3,   33,
-       33,   33,    9,   33,   31,   33,   33,   33,    6,   28,
+        0,    0,   37,   35,    1,    3,   23,   35,    7,    8,
+       21,   19,    4,   20,   22,   33,    5,   28,   18,   29,
+       34,   34,   34,   34,   34,   34,   34,   34,   34,    9,
+       35,   10,   25,   26,   33,    0,   30,   24,   31,   34,
+       34,   34,   34,   15,   34,   34,   34,   34,   34,   27,
+       33,   34,   34,   34,   12,   34,   34,   34,   34,   34,
+       34,   34,   16,    6,   34,   34,   34,   13,   11,   34,
+       34,   34,   17,   34,   32,   34,   34,   34,   14,    2,
         0
     } ;
 
@@ -478,6 +497,12 @@ static const flex_int16_t yy_chk[140] =
        81,   81,   81,   81,   81,   81,   81,   81,   81
     } ;
 
+/* Table of booleans, true if rule could match eol. */
+static const flex_int32_t yy_rule_can_match_eol[37] =
+    {   0,
+0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,     };
+
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
 
@@ -494,9 +519,9 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "./src/compilateur.l"
 #line 2 "./src/compilateur.l"
-    #include "y.tab.h"
-#line 499 "lex.yy.c"
-#line 500 "lex.yy.c"
+	#include "y.tab.h"
+#line 524 "lex.yy.c"
+#line 525 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -713,10 +738,10 @@ YY_DECL
 		}
 
 	{
-#line 8 "./src/compilateur.l"
+#line 10 "./src/compilateur.l"
 
 
-#line 720 "lex.yy.c"
+#line 745 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -762,6 +787,16 @@ yy_find_action:
 
 		YY_DO_BEFORE_ACTION;
 
+		if ( yy_act != YY_END_OF_BUFFER && yy_rule_can_match_eol[yy_act] )
+			{
+			int yyl;
+			for ( yyl = 0; yyl < yyleng; ++yyl )
+				if ( yytext[yyl] == '\n' )
+					
+    yylineno++;
+;
+			}
+
 do_action:	/* This label is used only to access EOF actions. */
 
 		switch ( yy_act )
@@ -775,180 +810,186 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 10 "./src/compilateur.l"
+#line 12 "./src/compilateur.l"
 {}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 12 "./src/compilateur.l"
-{return tMAIN;}
+#line 13 "./src/compilateur.l"
+{}
 	YY_BREAK
 case 3:
+/* rule 3 can match eol */
 YY_RULE_SETUP
-#line 13 "./src/compilateur.l"
-{return tCONST;}
+#line 14 "./src/compilateur.l"
+{}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 14 "./src/compilateur.l"
-{return tINT;}
+#line 15 "./src/compilateur.l"
+{return tVIRGULE;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 16 "./src/compilateur.l"
-{return tBREAK;}
+{return tPOINTVIRGULE;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 17 "./src/compilateur.l"
-{return tCONTINUE;}
+#line 18 "./src/compilateur.l"
+{return tMAIN;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 18 "./src/compilateur.l"
-{return tIF;}
+#line 20 "./src/compilateur.l"
+{return tPO;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 19 "./src/compilateur.l"
-{return tELSE;}
+#line 21 "./src/compilateur.l"
+{return tPF;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 20 "./src/compilateur.l"
-{return tWHILE;}
+#line 22 "./src/compilateur.l"
+{return tAO;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 23 "./src/compilateur.l"
-{return tAO;}
+{return tAF;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 24 "./src/compilateur.l"
-{return tAF;}
+#line 25 "./src/compilateur.l"
+{return tCONST;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 26 "./src/compilateur.l"
-{return tPLUS;}
+{return tINT;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 27 "./src/compilateur.l"
-{return tMOINS;}
+#line 28 "./src/compilateur.l"
+{return tBREAK;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 28 "./src/compilateur.l"
-{return tMULTIPLIER;}
+#line 29 "./src/compilateur.l"
+{return tCONTINUE;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 29 "./src/compilateur.l"
-{return tDIVISER;}
+#line 30 "./src/compilateur.l"
+{return tIF;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 30 "./src/compilateur.l"
-{return tEQ;}
+#line 31 "./src/compilateur.l"
+{return tELSE;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 31 "./src/compilateur.l"
-{return tPO;}
+#line 32 "./src/compilateur.l"
+{return tWHILE;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 32 "./src/compilateur.l"
-{return tPF;}
+#line 34 "./src/compilateur.l"
+{return tEGAL;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 34 "./src/compilateur.l"
-{return tNOT;}
+#line 35 "./src/compilateur.l"
+{return tPLUS;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 35 "./src/compilateur.l"
-{return tISEQ;}
+#line 36 "./src/compilateur.l"
+{return tMOINS;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 36 "./src/compilateur.l"
-{return tISDIF;}
+#line 37 "./src/compilateur.l"
+{return tMULTIPLIER;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 37 "./src/compilateur.l"
-{return tAND;}
+#line 38 "./src/compilateur.l"
+{return tDIVISER;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 38 "./src/compilateur.l"
-{return tOR;}
+#line 40 "./src/compilateur.l"
+{return tNOT;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 39 "./src/compilateur.l"
-{return tINF;}
+#line 41 "./src/compilateur.l"
+{return tISEQ;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 40 "./src/compilateur.l"
-{return tSUP;}
+#line 42 "./src/compilateur.l"
+{return tISDIF;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 41 "./src/compilateur.l"
-{return tINFEQ;}
+#line 43 "./src/compilateur.l"
+{return tAND;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 42 "./src/compilateur.l"
-{return tSUPEQ;}
+#line 44 "./src/compilateur.l"
+{return tOR;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 45 "./src/compilateur.l"
-{return tNewLine;}
+{return tINF;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 46 "./src/compilateur.l"
-{return tVIRGULE;}
+{return tSUP;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 47 "./src/compilateur.l"
-{return tPOINTVIRGULE;}
+{return tINFEQ;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 49 "./src/compilateur.l"
-{return tPRINTF;}
+#line 48 "./src/compilateur.l"
+{return tSUPEQ;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 50 "./src/compilateur.l"
-{yylval.nb = atoi(yytext); return tNB;}
+{return tPRINTF;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 52 "./src/compilateur.l"
-{strcpy(yylval.str,yytext); return tID;}
+{yylval.nb = atoi(yytext); return tNB;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 53 "./src/compilateur.l"
-{return tERROR;}
+{strcpy(yylval.str,yytext); return tID;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 55 "./src/compilateur.l"
+{return tERROR;}
+	YY_BREAK
+case 36:
+YY_RULE_SETUP
+#line 57 "./src/compilateur.l"
 ECHO;
 	YY_BREAK
-#line 952 "lex.yy.c"
+#line 993 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1316,6 +1357,10 @@ static int yy_get_next_buffer (void)
 
 	*--yy_cp = (char) c;
 
+    if ( c == '\n' ){
+        --yylineno;
+    }
+
 	(yytext_ptr) = yy_bp;
 	(yy_hold_char) = *yy_cp;
 	(yy_c_buf_p) = yy_cp;
@@ -1392,6 +1437,11 @@ static int yy_get_next_buffer (void)
 	c = *(unsigned char *) (yy_c_buf_p);	/* cast for 8-bit char's */
 	*(yy_c_buf_p) = '\0';	/* preserve yytext */
 	(yy_hold_char) = *++(yy_c_buf_p);
+
+	if ( c == '\n' )
+		
+    yylineno++;
+;
 
 	return c;
 }
@@ -1859,6 +1909,9 @@ static int yy_init_globals (void)
      * This function is called from yylex_destroy(), so don't allocate here.
      */
 
+    /* We do not touch yylineno unless the option is enabled. */
+    yylineno =  1;
+    
     (yy_buffer_stack) = NULL;
     (yy_buffer_stack_top) = 0;
     (yy_buffer_stack_max) = 0;
@@ -1953,7 +2006,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 55 "./src/compilateur.l"
+#line 57 "./src/compilateur.l"
 
 
 int yywrap(void){return 1;}
@@ -1964,26 +2017,6 @@ int yywrap(void){return 1;}
 Strings
 
 \".*\" {strcpy(yylval.str,yytext);return tSTRING;}
+*/
 
-ADDED token : tBREAK, tCONTINUE, tIF, tELSE, tWHILE
-
-DONE :
-main
-int
-const
-break
-else
-const
-continue
-while
-if
-
-OPT:
-return {return tRETURN;}
-void
-switch
-case
-char
-for
-do*/
 

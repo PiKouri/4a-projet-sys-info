@@ -45,88 +45,46 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    tMAIN = 258,
-    tAO = 259,
-    tAF = 260,
-    tCONST = 261,
-    tINT = 262,
-    tPLUS = 263,
-    tMOINS = 264,
-    tMULTIPLIER = 265,
-    tDIVISER = 266,
-    tEQ = 267,
-    tPO = 268,
-    tPF = 269,
-    tNewLine = 270,
-    tVIRGULE = 271,
-    tPOINTVIRGULE = 272,
-    tPRINTF = 273,
-    tBREAK = 274,
-    tCONTINUE = 275,
-    tIF = 276,
-    tWHILE = 277,
-    tELSE = 278,
-    tNOT = 279,
-    tISEQ = 280,
-    tISDIF = 281,
-    tAND = 282,
-    tOR = 283,
-    tINF = 284,
-    tSUP = 285,
-    tINFEQ = 286,
-    tSUPEQ = 287,
-    tNB = 288,
-    tID = 289,
-    tERROR = 290
+    tADD = 258,
+    tMUL = 259,
+    tSOU = 260,
+    tDIV = 261,
+    tCOP = 262,
+    tAFC = 263,
+    tJMP = 264,
+    tJMF = 265,
+    tINF = 266,
+    tSUP = 267,
+    tEQU = 268,
+    tPRI = 269,
+    tNB = 270
   };
 #endif
 /* Tokens.  */
-#define tMAIN 258
-#define tAO 259
-#define tAF 260
-#define tCONST 261
-#define tINT 262
-#define tPLUS 263
-#define tMOINS 264
-#define tMULTIPLIER 265
-#define tDIVISER 266
-#define tEQ 267
-#define tPO 268
-#define tPF 269
-#define tNewLine 270
-#define tVIRGULE 271
-#define tPOINTVIRGULE 272
-#define tPRINTF 273
-#define tBREAK 274
-#define tCONTINUE 275
-#define tIF 276
-#define tWHILE 277
-#define tELSE 278
-#define tNOT 279
-#define tISEQ 280
-#define tISDIF 281
-#define tAND 282
-#define tOR 283
-#define tINF 284
-#define tSUP 285
-#define tINFEQ 286
-#define tSUPEQ 287
-#define tNB 288
-#define tID 289
-#define tERROR 290
+#define tADD 258
+#define tMUL 259
+#define tSOU 260
+#define tDIV 261
+#define tCOP 262
+#define tAFC 263
+#define tJMP 264
+#define tJMF 265
+#define tINF 266
+#define tSUP 267
+#define tEQU 268
+#define tPRI 269
+#define tNB 270
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 11 "./src/compilateur.y" /* yacc.c:1909  */
+#line 11 "./src/interpreter.y" /* yacc.c:1909  */
 
     int nb;
-    char str[100]; // A voir
-    
 
-#line 130 "y.tab.h" /* yacc.c:1909  */
+#line 88 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
