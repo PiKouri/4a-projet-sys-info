@@ -2,8 +2,8 @@ SRCC:= ./src/*.c
 
 all: compilateur
 
-lex: ./src/compilateur.l
-	lex ./src/compilateur.l
+lex: ./src/compilateur_test.l
+	lex ./src/compilateur_test.l
 	gcc lex.yy.c -Isrc -o ex_lex
 
 compilateur: ./src/compilateur.y ./src/compilateur.l ./src/symbol_table.c
@@ -15,4 +15,4 @@ run: compilateur
 	./compilateur < input.txt
 
 clean:
-	rm -f lex.yy.c compilateur y.tab.h y.tab.c *.o
+	rm -f ex_lex lex.yy.c compilateur y.tab.h y.tab.c *.o
