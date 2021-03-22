@@ -14,25 +14,24 @@
 	    int initialized;
 	};
 
-	struct SymbolTableEntry * createSymbolTable(int size){
-		struct SymbolTableEntry ret[size];
+	void initSymbolTable(struct SymbolTableEntry * table){
 		int i;		
-		for(i=0;i<size;i++){
-			strncpy(ret[i].name,"\0",STRLENGTH);
-			ret[i].address = -1;
-			ret[i].initialized = 0;
+		for(i=0;i<MAXENTRY;i++){
+			strncpy(table[i].name,"\0",STRLENGTH);
+			table[i].address = -1;
+			table[i].initialized = 0;
 		}
-		return ret;
 	}
-	void addEntry(SymbolTableEntry * table, SymbolTableEntry e){
+	void addEntry(struct SymbolTableEntry * table, SymbolTableEntry e){
 		
 	}
 
-	SymbolTableEntry getEntry(SymbolTableEntry * table, char * name){
+	SymbolTableEntry getEntry(struct SymbolTableEntry * table, char * name){
 		return null;
 	}
 
-	struct SymbolTableEntry * symbolTable = createSymbolTable(MAXENTRY);
+	struct SymbolTableEntry symbolTable[MAXENTRY];
+	initSymbolTable(symbolTable);
 	
 	
 
