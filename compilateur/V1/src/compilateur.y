@@ -1,20 +1,24 @@
-%{
-	#include <stdio.h>
-    //#include "symbol_table.h"
-	int yylex();
-	void yyerror(char*);
-	int yydebug = 1;
-	extern int yylineno;
-
-	
-%}
+%code requires {
+    #include <stdio.h>
+    #include "symbol_table.h"
+    #include "globals.h"
+}
 
 /* Union for yylval */
 %union {
     int nb;
-    char str[100]; // A voir
-    
+    char str[STRLENGTH]; // A voir
+    enum Type_var type;
 } 
+
+%{
+	int yylex();
+	void yyerror(char*);
+	int yydebug = 1;
+	extern int yylineno;   
+    struct SymbolTable symbolTable;
+    enum Type_var type; 
+%}
 
 %left tPLUS
 %left tMOINS
@@ -25,6 +29,7 @@
 %token <nb> tNB
 %token <str> tID
 %token <str> tERROR
+%type <type> TYPE
 // %token <str> tSTRING
 
 %%
@@ -32,7 +37,7 @@
 %start FILE;
 
 FILE:
-	{printf("-----DEBUT-----\n");} tMAIN tPO tPF tAO {printf("-----ZONE DE DECLARATIONS-----\n");} DECLARATIONS {printf("-----ZONE D'INSTRUCTIONS-----\n");} INSTRUCTIONS tAF {printf("-----FIN-----\n");};
+	{printf("-----DEBUT-----\n"); initSymbolTable(&symbolTable);} tMAIN tPO tPF tAO {printf("-----ZONE DE DECLARATIONS-----\n");} DECLARATIONS {printf("-----ZONE D'INSTRUCTIONS-----\n");} INSTRUCTIONS tAF {printf("-----FIN-----\n");};
 
 DECLARATIONS :
 	/* epsilon */
@@ -44,8 +49,8 @@ DECLARATION :
 	;
 
 TYPE : 
-	tCONST {printf("CONST : ");}
-	| tINT {printf("INT : ");}
+	tCONST {printf("CONST : ");type=INT;}
+	| tINT {printf("INT : ");type=INT;}
 	;
 
 ID_SET : 

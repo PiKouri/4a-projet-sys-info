@@ -39,20 +39,28 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 1 "./src/compilateur.y" /* yacc.c:1909  */
+
+    #include <stdio.h>
+    #include "symbol_table.h"
+    #include "globals.h"
+
+#line 50 "y.tab.h" /* yacc.c:1909  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    tMAIN = 258,
-    tAO = 259,
-    tAF = 260,
-    tCONST = 261,
-    tINT = 262,
-    tPLUS = 263,
-    tMOINS = 264,
-    tMULTIPLIER = 265,
+    tPLUS = 258,
+    tMOINS = 259,
+    tMULTIPLIER = 260,
+    tMAIN = 261,
+    tAO = 262,
+    tAF = 263,
+    tCONST = 264,
+    tINT = 265,
     tDIVISER = 266,
     tEGAL = 267,
     tPO = 268,
@@ -80,14 +88,14 @@ extern int yydebug;
   };
 #endif
 /* Tokens.  */
-#define tMAIN 258
-#define tAO 259
-#define tAF 260
-#define tCONST 261
-#define tINT 262
-#define tPLUS 263
-#define tMOINS 264
-#define tMULTIPLIER 265
+#define tPLUS 258
+#define tMOINS 259
+#define tMULTIPLIER 260
+#define tMAIN 261
+#define tAO 262
+#define tAF 263
+#define tCONST 264
+#define tINT 265
 #define tDIVISER 266
 #define tEGAL 267
 #define tPO 268
@@ -118,13 +126,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 10 "./src/compilateur.y" /* yacc.c:1909  */
+#line 8 "./src/compilateur.y" /* yacc.c:1909  */
 
     int nb;
-    char str[100]; // A voir
-    
+    char str[STRLENGTH]; // A voir
+    enum Type_var type;
 
-#line 128 "y.tab.h" /* yacc.c:1909  */
+#line 136 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

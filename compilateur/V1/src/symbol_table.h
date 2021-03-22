@@ -1,5 +1,4 @@
-#define MAXENTRY 100
-#define STRLENGTH 200
+#include "globals.h"
 	
 enum Type_var { 
 	NAN, 

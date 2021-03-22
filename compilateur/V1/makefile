@@ -6,10 +6,10 @@ lex: ./src/compilateur.l
 	lex ./src/compilateur.l
 	gcc lex.yy.c -Isrc -o ex_lex
 
-compilateur: ./src/compilateur.y ./src/compilateur.l
+compilateur: ./src/compilateur.y ./src/compilateur.l ./src/symbol_table.c
 	yacc -d ./src/compilateur.y
 	lex ./src/compilateur.l
-	gcc lex.yy.c y.tab.c -Isrc -o compilateur
+	gcc ./src/symbol_table.c lex.yy.c y.tab.c -Isrc -o compilateur
 
 run: compilateur
 	./compilateur < input.txt
