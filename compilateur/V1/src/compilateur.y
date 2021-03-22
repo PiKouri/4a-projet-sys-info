@@ -1,20 +1,24 @@
 %{
 	#include <stdio.h>
+    //#include "symbol_table.h"
 	int yylex();
 	void yyerror(char*);
 	int yydebug = 1;
 	extern int yylineno;
 
 	
-
 %}
 
 /* Union for yylval */
 %union {
     int nb;
-    char str[200]; // A voir
+    char str[100]; // A voir
     
 } 
+
+%left tPLUS
+%left tMOINS
+%left tMULTIPLIER
 
 %token tMAIN tAO tAF tCONST tINT tPLUS tMOINS tMULTIPLIER tDIVISER tEGAL tPO tPF tVIRGULE tPOINTVIRGULE tPRINTF tBREAK tCONTINUE tIF tWHILE tELSE tNOT tISEQ tISDIF tAND tOR tINF tSUP tINFEQ tSUPEQ
 
@@ -45,18 +49,18 @@ TYPE :
 	;
 
 ID_SET : 
-	tID {printf("%s",$1);}
-	| tID tEGAL EXPRESSION {printf("->%s",$1);}
+	tID tEGAL EXPRESSION {printf("->%s",$1);}
 	| tID tVIRGULE {printf("%s,",$1);} ID_SET
-	| tID tEGAL EXPRESSION tVIRGULE {printf("->%s,",$1);} ID_SET
+	| tID tEGAL EXPRESSION tVIRGULE {printf("->%s,",$1);} ID_SET    
+	| tID {printf("%s",$1);}
 	;
 
 INSTRUCTIONS : 
 	/* epsilon */
-	| INSTRUCTION INSTRUCTIONS 
-	| IF INSTRUCTION INSTRUCTIONS {printf("\n");}
 	| IF INSTRUCTION tELSE {printf("ELSE ");} INSTRUCTION INSTRUCTIONS {printf("\n");}
+	| IF INSTRUCTION INSTRUCTIONS {printf("\n");}
 	| WHILE INSTRUCTION  INSTRUCTIONS {printf("\n");}
+	| INSTRUCTION INSTRUCTIONS 
 	;
 
 IF : {printf("IF (");} tIF  tPO EXPRESSION tPF {printf(")");};
@@ -72,21 +76,21 @@ BLOC : tAO INSTRUCTIONS tAF;
 
 EXPRESSION :
 	 tNB {printf("%d",$1);}
-	| tID {printf("%s",$1);}
 	| tID {printf("%s=",$1);} tEGAL EXPRESSION
+	| tID {printf("%s",$1);}
+	| tPO {printf("(");} EXPRESSION {printf(")");} tPF
+	| tNOT {printf("!");} EXPRESSION
+	| tPRINTF tPO tID tPF {printf("printf(%s)",$3);} 
 	| EXPRESSION {printf("+");} tPLUS EXPRESSION
 	| EXPRESSION {printf("-");} tMOINS EXPRESSION
 	| EXPRESSION {printf("*");} tMULTIPLIER EXPRESSION
 	| EXPRESSION {printf("/");} tDIVISER EXPRESSION
-	| tPO {printf("(");} EXPRESSION {printf(")");} tPF
-	| tNOT {printf("!");} EXPRESSION
 	| EXPRESSION {printf("==");} tISEQ EXPRESSION
 	| EXPRESSION {printf("!=");} tISDIF EXPRESSION
 	| EXPRESSION {printf("<");} tINF EXPRESSION
 	| EXPRESSION {printf("<=");} tINFEQ EXPRESSION
 	| EXPRESSION {printf(">");} tSUP EXPRESSION
 	| EXPRESSION {printf(">=");} tSUPEQ EXPRESSION
-	| tPRINTF tPO tID tPF {printf("printf(%s)",$3);} 
 	;
 
 /*------------
