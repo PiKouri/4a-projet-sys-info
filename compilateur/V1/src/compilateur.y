@@ -4,35 +4,7 @@
 	void yyerror(char*);
 	int yydebug = 1;
 	extern int yylineno;
-	#define MAXENTRY 100
-	#define STRLENGTH 200
 
-	struct SymbolTableEntry
-	{
-	    char name[STRLENGTH];
-	    int address;
-	    int initialized;
-	};
-
-	void initSymbolTable(struct SymbolTableEntry * table){
-		int i;		
-		for(i=0;i<MAXENTRY;i++){
-			strncpy(table[i].name,"\0",STRLENGTH);
-			table[i].address = -1;
-			table[i].initialized = 0;
-		}
-	}
-	void addEntry(struct SymbolTableEntry * table, SymbolTableEntry e){
-		
-	}
-
-	SymbolTableEntry getEntry(struct SymbolTableEntry * table, char * name){
-		return null;
-	}
-
-	struct SymbolTableEntry symbolTable[MAXENTRY];
-	initSymbolTable(symbolTable);
-	
 	
 
 %}
@@ -40,7 +12,7 @@
 /* Union for yylval */
 %union {
     int nb;
-    char str[STRLENGTH]; // A voir
+    char str[200]; // A voir
     
 } 
 
