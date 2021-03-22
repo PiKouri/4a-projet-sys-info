@@ -1,4 +1,4 @@
-%code requires {
+%code requires{
     #include <stdio.h>
     #include "symbol_table.h"
     #include "globals.h"
@@ -16,8 +16,8 @@
 	void yyerror(char*);
 	int yydebug = 1;
 	extern int yylineno;   
-    struct SymbolTable symbolTable;
-    enum Type_var type; 
+    struct SymbolTable table;
+    enum Type_var lasttype; 
 %}
 
 %left tPLUS
@@ -37,7 +37,10 @@
 %start FILE;
 
 FILE:
-	{printf("-----DEBUT-----\n"); initSymbolTable(&symbolTable);} tMAIN tPO tPF tAO {printf("-----ZONE DE DECLARATIONS-----\n");} DECLARATIONS {printf("-----ZONE D'INSTRUCTIONS-----\n");} INSTRUCTIONS tAF {printf("-----FIN-----\n");};
+	{printf("-----DEBUT-----\n"); initSymbolTable(&table);} 
+		tMAIN tPO tPF tAO {printf("-----ZONE DE DECLARATIONS-----\n");} DECLARATIONS 
+		{printTable(&table);printf("-----ZONE D'INSTRUCTIONS-----\n");} INSTRUCTIONS tAF 
+		{printf("-----FIN-----\n");printTable(&table);};
 
 DECLARATIONS :
 	/* epsilon */
@@ -49,31 +52,41 @@ DECLARATION :
 	;
 
 TYPE : 
-	tCONST {printf("CONST : ");type=INT;}
-	| tINT {printf("INT : ");type=INT;}
+	tCONST {printf("CONST : ");lasttype=CONST;}
+	| tINT {printf("INT : ");lasttype=INT;}
 	;
 
 ID_SET : 
-	tID tEGAL EXPRESSION {printf("->%s",$1);}
-	| tID tVIRGULE {printf("%s,",$1);} ID_SET
-	| tID tEGAL EXPRESSION tVIRGULE {printf("->%s,",$1);} ID_SET    
-	| tID {printf("%s",$1);}
+	tID tEGAL EXPRESSION 
+		{printf("->%s",$1);
+		pushEntry(&table,lasttype,$1);
+		initializeEntry(&table,$1);}
+	| tID tVIRGULE 
+		{printf("%s,",$1);
+		pushEntry(&table,lasttype,$1);} ID_SET
+	| tID tEGAL EXPRESSION tVIRGULE 
+		{printf("->%s,",$1);
+		pushEntry(&table,lasttype,$1);
+		initializeEntry(&table,$1);} ID_SET    
+	| tID 
+		{printf("%s",$1);
+		pushEntry(&table,lasttype,$1);}
 	;
 
 INSTRUCTIONS : 
 	/* epsilon */
-	| IF INSTRUCTION tELSE {printf("ELSE ");} INSTRUCTION INSTRUCTIONS {printf("\n");}
-	| IF INSTRUCTION INSTRUCTIONS {printf("\n");}
-	| WHILE INSTRUCTION  INSTRUCTIONS {printf("\n");}
+	| IF INSTRUCTION tELSE {printf("ELSE ");} INSTRUCTION INSTRUCTIONS
+ 	| IF INSTRUCTION INSTRUCTIONS
+	| WHILE INSTRUCTION  INSTRUCTIONS
 	| INSTRUCTION INSTRUCTIONS 
 	;
 
-IF : {printf("IF (");} tIF  tPO EXPRESSION tPF {printf(")");};
+IF : {printf("IF (");} tIF  tPO EXPRESSION tPF {printf(") ");};
 
-WHILE : {printf("WHILE (");} tWHILE tPO EXPRESSION tPF {printf(")");};
+WHILE : {printf("WHILE (");} tWHILE tPO EXPRESSION tPF {printf(") ");};
 
 INSTRUCTION : 
-	{printf("BLOC ");} BLOC {printf("\n");}
+	{printf("BLOC ");} BLOC
 	| {printf("INSTRUCTION ");} EXPRESSION tPOINTVIRGULE {printf("\n");}
 	;
 
@@ -81,7 +94,9 @@ BLOC : tAO INSTRUCTIONS tAF;
 
 EXPRESSION :
 	 tNB {printf("%d",$1);}
-	| tID {printf("%s=",$1);} tEGAL EXPRESSION
+	| tID {printf("%s=",$1);
+		if(isInitialized(&table,$1)==0)
+			initializeEntry(&table,$1);} tEGAL EXPRESSION
 	| tID {printf("%s",$1);}
 	| tPO {printf("(");} EXPRESSION {printf(")");} tPF
 	| tNOT {printf("!");} EXPRESSION

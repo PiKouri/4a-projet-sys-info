@@ -91,13 +91,15 @@ void printTable(struct SymbolTable * t){
   int i;		
   for(i=0;i<(t->n);i++){
     char stype[10];
-    if(t->table[i].type==NAN){
-      strncpy(stype,"NAN  ",10);
-    }else if(t->table[i].type==INT){
-       strncpy(stype,"INT  ",10);
-    }else{
-       strncpy(stype,"ERR  ",10);
-    }
+	switch (t->table[i].type) {
+		case NAN : strncpy(stype,"NAN  ",10);
+			break;
+		case INT : strncpy(stype,"INT  ",10);
+			break;
+		case CONST : strncpy(stype,"CONST",10);
+			break;
+		default : strncpy(stype,"ERR  ",10);
+	}    
     printf("%s | %s | %d | %d |\n",stype,t->table[i].name, t->table[i].address, t->table[i].initialized);
   }
 }

@@ -2,6 +2,7 @@
 	
 enum Type_var { 
 	NAN, 
+	CONST,
 	INT
 };
 
