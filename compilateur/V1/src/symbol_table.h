@@ -1,48 +1,37 @@
-	#define MAXENTRY 100
-	#define STRLENGTH 200
+#define MAXENTRY 100
+#define STRLENGTH 200
 	
-	enum type_var { 
-		NAN, 
-		INT
-	};
+enum Type_var { 
+	NAN, 
+	INT
+};
 
-	struct SymbolTable{
-	  
-	};
+struct SymbolTableEntry
+{
+	enum Type_var type;
+	char name[STRLENGTH];
+	int address;
+	int initialized;
+};
 
-	struct SymbolTableEntry
-	{
-		type_var type;
-		char name[STRLENGTH];
-		int address;
-		int initialized;
-	};
+struct SymbolTable{
+  struct SymbolTableEntry table[MAXENTRY];
+  int n;
+};
 
-	void initSymbolTable(struct SymbolTableEntry * table){
-		int i;		
-		for(i=0;i<MAXENTRY;i++){
-			table[i].type = NAN;
-			strncpy(table[i].name,"\0",STRLENGTH);
-			table[i].address = -1;
-			table[i].initialized = 0;
-		}
-	}
-	void addEntry(struct SymbolTableEntry * table, SymbolTableEntry e){
-		
-	}
+void initSymbolTable(struct SymbolTable * t);
 
-	void initializeEntry(struct SymbolTableEntry * table, char * name){
-	  int i=0;
-	  while(i<MAXENTRY && ){
-	    
-	    i++;
-	  }
-	}
+int pushEntry(struct SymbolTable * t, enum Type_var type ,char * name);
+int popEntry(struct SymbolTable * t);
 
-	SymbolTableEntry getEntry(struct SymbolTableEntry * table, char * name){
-		return null;
-	}
-
-	struct SymbolTableEntry symbolTable[MAXENTRY];
-	initSymbolTable(symbolTable);
+int initializeEntry(struct SymbolTable * t, char * name);
+int getAddress(struct SymbolTable * t, char * name);
+int isInitialized(struct SymbolTable * t, char * name);
+void printTable(struct SymbolTable * t);
 	
+
+/*
+struct SymbolTable symbolTable;
+initSymbolTable(symbolTable);
+*/
+
