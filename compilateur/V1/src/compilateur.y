@@ -1,7 +1,10 @@
 %code requires{
     #include <stdio.h>
+    #include <stdlib.h>
+    #include <string.h>
     #include "symbol_table.h"
     #include "globals.h"
+    #define FILENAME "./file.ass"
 }
 
 /* Union for yylval */
@@ -18,11 +21,68 @@
 	extern int yylineno;   
     struct SymbolTable table;
     enum Type_var lasttype; 
+    FILE *fptr;
+    int itmp = 0;
+    void operation2addr(char* op) {
+        int tmp1 = popEntry(&table);
+        int tmp2 = getLastAddress(&table);            
+        fprintf(fptr,"%s %d %d %d\n",op,tmp2,tmp2,tmp1);
+    }
+
+    void operation1cst(char* op, int cst) {
+        char str[10];
+        sprintf(str,"tmp%d",itmp++);
+        int tmp = pushEntry(&table,INT,str);
+        initializeEntry(&table,str);
+        fprintf(fptr,"%s %d %d\n",op,tmp,cst);
+    }
+
+    void operation1addr(char* op, char* name) {
+        char str[10];
+        sprintf(str,"tmp%d",itmp++);
+        int tmp = pushEntry(&table,INT,str);
+        initializeEntry(&table,str);
+        int addr = getAddress(&table,name);
+        if (addr == -1) {
+            printf("\n\n%s is not defined -> EXIT (line %d)\n\n",name,yylineno);
+            exit(-1);
+        }
+        if (isInitialized(&table,name)!=1) {
+            printf("\n\n%s has not been initialized -> EXIT (line %d)\n\n",name,yylineno);
+            exit(-2);            
+        }
+        fprintf(fptr,"%s %d %d\n",op,tmp,addr);
+    }
+
+    void affectation(char* name,int declaration){
+        int tmp = popEntry(&table);
+        int addr = getAddress(&table,name);
+        if (!declaration && addr == -1) {
+                printf("\n\n%s is not defined -> EXIT (line %d)\n\n",name,yylineno);
+                exit(-1);
+        }
+        initializeEntry(&table,name);
+        fprintf(fptr,"COP %d %d\n",addr,tmp);
+    }
+
+    void print(char* name){
+        int addr = getAddress(&table,name);
+        if (addr == -1) {
+            printf("\n\n%s is not defined -> EXIT (line %d)\n\n",name,yylineno);
+            exit(-1);
+        }
+        if (isInitialized(&table,name)!=1) {
+            printf("\n\n%s has not been initialized -> EXIT (line %d)\n\n",name,yylineno);
+            exit(-2);            
+        }
+        fprintf(fptr,"PRI %d\n",addr);
+    }
 %}
 
 %left tPLUS
 %left tMOINS
 %left tMULTIPLIER
+%left tDIVISER
 
 %token tMAIN tAO tAF tCONST tINT tPLUS tMOINS tMULTIPLIER tDIVISER tEGAL tPO tPF tVIRGULE tPOINTVIRGULE tPRINTF tBREAK tCONTINUE tIF tWHILE tELSE tNOT tISEQ tISDIF tAND tOR tINF tSUP tINFEQ tSUPEQ
 
@@ -30,6 +90,7 @@
 %token <str> tID
 %token <str> tERROR
 %type <type> TYPE
+%type <str> ID_EGAL
 // %token <str> tSTRING
 
 %%
@@ -37,10 +98,10 @@
 %start FILE;
 
 FILE:
-	{printf("-----DEBUT-----\n"); initSymbolTable(&table);} 
+	{printf("-----DEBUT-----\n"); initSymbolTable(&table); fptr = fopen(FILENAME,"w");} 
 		tMAIN tPO tPF tAO {printf("-----ZONE DE DECLARATIONS-----\n");} DECLARATIONS 
 		{printTable(&table);printf("-----ZONE D'INSTRUCTIONS-----\n");} INSTRUCTIONS tAF 
-		{printf("-----FIN-----\n");printTable(&table);};
+		{printf("-----FIN-----\n");printTable(&table); fclose(fptr);};
 
 DECLARATIONS :
 	/* epsilon */
@@ -57,21 +118,21 @@ TYPE :
 	;
 
 ID_SET : 
-	tID tEGAL EXPRESSION 
-		{printf("->%s",$1);
-		pushEntry(&table,lasttype,$1);
-		initializeEntry(&table,$1);}
+	ID_EGAL EXPRESSION {printf("->%s",$1); affectation($1,1);}
 	| tID tVIRGULE 
 		{printf("%s,",$1);
 		pushEntry(&table,lasttype,$1);} ID_SET
-	| tID tEGAL EXPRESSION tVIRGULE 
-		{printf("->%s,",$1);
-		pushEntry(&table,lasttype,$1);
-		initializeEntry(&table,$1);} ID_SET    
+	| ID_EGAL EXPRESSION tVIRGULE 
+		{printf("->%s,",$1); affectation($1,1);        
+        } ID_SET    
 	| tID 
 		{printf("%s",$1);
 		pushEntry(&table,lasttype,$1);}
 	;
+
+ID_EGAL :
+    tID tEGAL {pushEntry(&table,lasttype,$1);strncpy($$,$1,STRLENGTH);} 
+    ;
 
 INSTRUCTIONS : 
 	/* epsilon */
@@ -93,18 +154,17 @@ INSTRUCTION :
 BLOC : tAO INSTRUCTIONS tAF;
 
 EXPRESSION :
-	 tNB {printf("%d",$1);}
-	| tID {printf("%s=",$1);
-		if(isInitialized(&table,$1)==0)
-			initializeEntry(&table,$1);} tEGAL EXPRESSION
-	| tID {printf("%s",$1);}
+	 tNB {printf("%d",$1);operation1cst("AFC",$1);}
+	| tID {printf("%s=",$1);} tEGAL EXPRESSION 
+        {initializeEntry(&table,$1); affectation($1,0);}
+	| tID {printf("%s",$1);operation1addr("COP",$1);}
 	| tPO {printf("(");} EXPRESSION {printf(")");} tPF
 	| tNOT {printf("!");} EXPRESSION
-	| tPRINTF tPO tID tPF {printf("printf(%s)",$3);} 
-	| EXPRESSION {printf("+");} tPLUS EXPRESSION
-	| EXPRESSION {printf("-");} tMOINS EXPRESSION
-	| EXPRESSION {printf("*");} tMULTIPLIER EXPRESSION
-	| EXPRESSION {printf("/");} tDIVISER EXPRESSION
+	| tPRINTF tPO tID tPF {printf("printf(%s)",$3);print($3);} 
+	| EXPRESSION {printf("+");} tPLUS EXPRESSION {operation2addr("ADD");}
+	| EXPRESSION {printf("-");} tMOINS EXPRESSION {operation2addr("SOU");}
+	| EXPRESSION {printf("*");} tMULTIPLIER EXPRESSION {operation2addr("MUL");}
+	| EXPRESSION {printf("/");} tDIVISER EXPRESSION {operation2addr("DIV");}
 	| EXPRESSION {printf("==");} tISEQ EXPRESSION
 	| EXPRESSION {printf("!=");} tISDIF EXPRESSION
 	| EXPRESSION {printf("<");} tINF EXPRESSION

@@ -26,6 +26,7 @@ int popEntry(struct SymbolTable * t);
 
 int initializeEntry(struct SymbolTable * t, char * name);
 int getAddress(struct SymbolTable * t, char * name);
+int getLastAddress(struct SymbolTable * t);
 int isInitialized(struct SymbolTable * t, char * name);
 void printTable(struct SymbolTable * t);
 	

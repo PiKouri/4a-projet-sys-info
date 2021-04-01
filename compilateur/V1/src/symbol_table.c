@@ -52,9 +52,10 @@ int pushEntry(struct SymbolTable * t, enum Type_var type ,char * name){
     t->table[t->n].type = type;
     strncpy(t->table[t->n].name,name,STRLENGTH);
     t->table[t->n].address = t->n;
+    int res = t->n;
     t->table[t->n].initialized = 0;
     (t->n)++;
-    return 0;
+    return res;
   }
   else{
     return -1;
@@ -100,7 +101,12 @@ void printTable(struct SymbolTable * t){
 			break;
 		default : strncpy(stype,"ERR  ",10);
 	}    
-    printf("%s | %s | %d | %d |\n",stype,t->table[i].name, t->table[i].address, t->table[i].initialized);
+    printf("%s|  %s   |    %d    |   %d   |\n",stype,t->table[i].name, t->table[i].address, t->table[i].initialized);
   }
+}
+
+int getLastAddress(struct SymbolTable * t) {
+  int res = t->table[t->n-1].address;
+  return res;
 }
 
