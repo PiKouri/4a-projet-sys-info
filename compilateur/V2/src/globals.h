@@ -1,0 +1,2 @@
+#define MAXENTRY 100
+#define STRLENGTH 200
