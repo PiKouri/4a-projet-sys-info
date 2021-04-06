@@ -82,8 +82,7 @@ extern int yydebug;
     tINF = 277,
     tSUP = 278,
     tNB = 279,
-    tID = 280,
-    tISDIF = 281
+    tID = 280
   };
 #endif
 /* Tokens.  */
@@ -110,7 +109,6 @@ extern int yydebug;
 #define tSUP 278
 #define tNB 279
 #define tID 280
-#define tISDIF 281
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -122,7 +120,7 @@ union YYSTYPE
     char str[STRLENGTH]; // A voir
     enum Type_var type;
 
-#line 126 "y.tab.h"
+#line 124 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

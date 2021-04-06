@@ -23,6 +23,7 @@
   enum Type_var lasttype; 
   FILE *fptr;
   int itmp = 0;
+  int lineWhileJMP = 0;
   void operation(char* op) {
         int tmp1 = popEntry(&table);
         int tmp2 = getLastAddress(&table);            
@@ -146,10 +147,10 @@
 
 /* Priorité */
 %right tEGAL
-%left tISEQ tISDIF
+%left tISEQ
 %left tPLUS tMOINS
 %left tMULTIPLIER tDIVISER
-
+%left tSUP tINF
 
 %%
 
@@ -195,7 +196,7 @@ INSTRUCTIONS :
 	/* epsilon */
 	| IF INSTRUCTION tELSE 
 		{
-			int current = get_nb_lignes_asm() ; // current == 4
+			int current = get_nb_lignes_asm() ; 
 			patch($1, current+1) ;
 			fprintf(fptr, "JMP ?\n") ;
 			$1 = current+1 ;
@@ -203,19 +204,19 @@ INSTRUCTIONS :
 		} 
 		INSTRUCTION 
 		{
-			int current = get_nb_lignes_asm() ; // current == 4
+			int current = get_nb_lignes_asm() ;
 			patch($1, current) ;
 		} INSTRUCTIONS
  	| IF INSTRUCTION 
 		{
-			int current = get_nb_lignes_asm() ; // current == 4
+			int current = get_nb_lignes_asm() ;
 			patch($1, current) ;
 		} INSTRUCTIONS
 	| WHILE INSTRUCTION 
 		{
-			fprintf(fptr, "JMP %d\n",$1-3) ;
-			int current = get_nb_lignes_asm() ; // current == 4
-			patch($1, current+1) ;
+			fprintf(fptr, "JMP %d\n",lineWhileJMP) ;
+			int current = get_nb_lignes_asm() ;
+			patch($1, current) ;
 		} INSTRUCTIONS
 	| INSTRUCTION INSTRUCTIONS 
 	;
@@ -225,16 +226,16 @@ IF : tIF tPO EXPRESSION tPF
 			printf("IF (%s) ",$3);
 			int tmp = popEntry(&table);
 			fprintf(fptr, "JMF %d ?\n", tmp) ;
-			int ligne = get_nb_lignes_asm() ; // ligne == L2
+			int ligne = get_nb_lignes_asm() ;
 			$$ = ligne ;
 		};
 
-WHILE : tWHILE tPO EXPRESSION tPF 
+WHILE : tWHILE {lineWhileJMP=get_nb_lignes_asm();} tPO EXPRESSION tPF 
 		{
-			printf("WHILE (%s) ",$3);
+			printf("WHILE (%s) ",$4);
 			int tmp = popEntry(&table);
 			fprintf(fptr, "JMF %d ?\n", tmp) ;
-			int ligne = get_nb_lignes_asm() ; // ligne == L2
+			int ligne = get_nb_lignes_asm() ;
 			$$ = ligne ;
 		};
 
@@ -249,7 +250,7 @@ EXPRESSION :
 	tNB                                       {sprintf($$,"%d",$1);cst_to_vartemp($1);}
 	| tID tEGAL EXPRESSION                    {makeString($$,$1,"<-",$3);affectation($1,0);}
 	| tID                                     {makeString($$,$1,"","");var_to_vartemp($1);}
-	| tPO  EXPRESSION tPF                     {makeString($$,"(",$2,")");}
+	| tPO EXPRESSION tPF                      {makeString($$,"(",$2,")");}
 	| tPRINTF tPO tID tPF                     {makeString($$,"printf(",$3,")");print($3);} 
 	| EXPRESSION tPLUS EXPRESSION             {makeString($$,$1,"+",$3);operation("ADD");}
 	| EXPRESSION tMOINS EXPRESSION            {makeString($$,$1,"-",$3);operation("SOU");}
