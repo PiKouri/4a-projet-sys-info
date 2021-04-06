@@ -141,6 +141,7 @@
 %type <str> ID_EGAL
 %type <str> EXPRESSION
 %type <nb> IF
+%type <nb> WHILE
 
 
 /* Priorité */
@@ -210,20 +211,32 @@ INSTRUCTIONS :
 			int current = get_nb_lignes_asm() ; // current == 4
 			patch($1, current) ;
 		} INSTRUCTIONS
-	| WHILE INSTRUCTION  INSTRUCTIONS
+	| WHILE INSTRUCTION 
+		{
+			fprintf(fptr, "JMP %d\n",$1-3) ;
+			int current = get_nb_lignes_asm() ; // current == 4
+			patch($1, current+1) ;
+		} INSTRUCTIONS
 	| INSTRUCTION INSTRUCTIONS 
 	;
 
 IF : tIF tPO EXPRESSION tPF 
 		{
-			int tmp = popEntry(&table);
 			printf("IF (%s) ",$3);
+			int tmp = popEntry(&table);
 			fprintf(fptr, "JMF %d ?\n", tmp) ;
 			int ligne = get_nb_lignes_asm() ; // ligne == L2
 			$$ = ligne ;
 		};
 
-WHILE : tWHILE tPO EXPRESSION tPF {printf("WHILE (%s) ",$3);};
+WHILE : tWHILE tPO EXPRESSION tPF 
+		{
+			printf("WHILE (%s) ",$3);
+			int tmp = popEntry(&table);
+			fprintf(fptr, "JMF %d ?\n", tmp) ;
+			int ligne = get_nb_lignes_asm() ; // ligne == L2
+			$$ = ligne ;
+		};
 
 INSTRUCTION : 
 	{printf("BLOC ");} BLOC
