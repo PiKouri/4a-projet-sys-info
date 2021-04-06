@@ -90,6 +90,46 @@
 	return -1;
       }
     }
+
+	int get_nb_lignes_asm(){
+		int count = 0;
+		fclose(fptr);
+		// Open the file
+    	FILE* fp = fopen(FILENAME, "r");
+		// Extract characters from file and store in character c
+    	for (char c = getc(fp); c != EOF; c = getc(fp))
+        	if (c == '\n') // Increment count if this character is newline
+            	count = count + 1;
+		fclose(fp);
+		fptr=fopen(FILENAME,"a"); // Append
+		//printf("Test get nb lignes %d\n",count);
+		return count;
+	}
+
+	void patch(int lineNumber, int to) {
+		/* Mémorisation pour patcher apres la compilation. */
+		fclose(fptr);
+    	FILE* fp = fopen(FILENAME, "r");
+		FILE* fptmp = fopen("delete.tmp","w+");
+		char line[100]; /* or other suitable maximum line size */
+		int count = 1;
+		for (char c = getc(fp); c != EOF; c = getc(fp)) {
+			if (count == lineNumber && c == '?') {
+				fprintf(fptmp,"%d",to);
+			} else {
+			fputc(c, fptmp);
+        	if (c == '\n') // Increment count if this character is newline
+            	count = count + 1;
+			}
+		}
+		fclose(fp);
+		fclose(fptmp);
+		remove(FILENAME);
+		rename("delete.tmp", FILENAME);
+		fptr=fopen(FILENAME,"a"); // Append
+		//labels[from] = to ;
+	}
+
 %}
 
 
@@ -100,6 +140,7 @@
 %type <type> TYPE
 %type <str> ID_EGAL
 %type <str> EXPRESSION
+%type <nb> IF
 
 
 /* Priorité */
@@ -151,13 +192,36 @@ ID_EGAL :
 
 INSTRUCTIONS : 
 	/* epsilon */
-	| IF INSTRUCTION tELSE {printf("ELSE ");} INSTRUCTION INSTRUCTIONS
- 	| IF INSTRUCTION INSTRUCTIONS
+	| IF INSTRUCTION tELSE 
+		{
+			int current = get_nb_lignes_asm() ; // current == 4
+			patch($1, current+1) ;
+			fprintf(fptr, "JMP ?\n") ;
+			$1 = current+1 ;
+			printf("ELSE ");
+		} 
+		INSTRUCTION 
+		{
+			int current = get_nb_lignes_asm() ; // current == 4
+			patch($1, current) ;
+		} INSTRUCTIONS
+ 	| IF INSTRUCTION 
+		{
+			int current = get_nb_lignes_asm() ; // current == 4
+			patch($1, current) ;
+		} INSTRUCTIONS
 	| WHILE INSTRUCTION  INSTRUCTIONS
 	| INSTRUCTION INSTRUCTIONS 
 	;
 
-IF : tIF  tPO EXPRESSION tPF {printf("IF (%s) ",$3);};
+IF : tIF tPO EXPRESSION tPF 
+		{
+			int tmp = popEntry(&table);
+			printf("IF (%s) ",$3);
+			fprintf(fptr, "JMF %d ?\n", tmp) ;
+			int ligne = get_nb_lignes_asm() ; // ligne == L2
+			$$ = ligne ;
+		};
 
 WHILE : tWHILE tPO EXPRESSION tPF {printf("WHILE (%s) ",$3);};
 
