@@ -125,7 +125,7 @@
 		}
 		fclose(fp);
 		fclose(fptmp);
-		remove(FILENAME);
+		remove(FILENAME);https://github.com/PiKouri/4a-projet-sys-info.git
 		rename("delete.tmp", FILENAME);
 		fptr=fopen(FILENAME,"a"); // Append
 		//labels[from] = to ;
@@ -147,10 +147,10 @@
 
 /* Priorité */
 %right tEGAL
+%left tSUP tINF
 %left tISEQ
 %left tPLUS tMOINS
 %left tMULTIPLIER tDIVISER
-%left tSUP tINF
 
 %%
 
