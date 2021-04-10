@@ -13,11 +13,27 @@ compilateur: ./src/compilateur.y ./src/compilateur.l ./src/symbol_table.c
 
 run : compile
 
-compile: compilateur
-	./compilateur < input.txt
-
-execute : 
-	./../../interpreter/interpreter < output.asm
-
 clean:
 	rm -f ex_lex lex.yy.c compilateur y.tab.h y.tab.c *.o
+
+compile: compilateur
+	./compilateur < input_myc/input.myc
+
+compile_pgcd: compilateur
+	./compilateur < input_myc/pgcd.myc
+
+execute : 
+	./../../interpreter/interpreter < output_asm/output.asm
+
+test_pgcd_12 : compilateur
+	./compilateur < input_myc/pgcd.myc
+	./../../interpreter/interpreter < output_asm/output.asm
+
+test_pgcd_7 : compilateur
+	./compilateur < input_myc/pgcd_7.myc
+	./../../interpreter/interpreter < output_asm/output.asm
+
+test_pgcd_1 : compilateur
+	./compilateur < input_myc/pgcd_1.myc
+	./../../interpreter/interpreter < output_asm/output.asm
+

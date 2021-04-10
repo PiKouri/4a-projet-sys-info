@@ -4,7 +4,7 @@
     #include <string.h>
     #include "symbol_table.h"
     #include "globals.h"
-    #define FILENAME "./output.asm"
+    #define FILENAME "./output_asm/output.asm"
 }
 
 /* Union for yylval */
@@ -23,11 +23,12 @@
   enum Type_var lasttype; 
   FILE *fptr;
   int itmp = 0;
-  int lineWhileJMP = 0;
+  int asmLineCount = 1;
   void operation(char* op) {
         int tmp1 = popEntry(&table);
-        int tmp2 = getLastAddress(&table);            
+        int tmp2 = getLastAddress(&table);
         fprintf(fptr,"%s %d %d %d\n",op,tmp2,tmp2,tmp1);
+		asmLineCount++;
     }
 
     void cst_to_vartemp(int cst) {
@@ -36,6 +37,7 @@
         int tmp = pushEntry(&table,INT,str);
         initializeEntry(&table,str);
         fprintf(fptr,"AFC %d %d\n",tmp,cst);
+		asmLineCount++;
     }
 
     void var_to_vartemp(char* name) {
@@ -53,6 +55,7 @@
             exit(-2);            
         }
         fprintf(fptr,"COP %d %d\n",tmp,addr);
+		asmLineCount++;
     }
 
     void affectation(char* name,int declaration){
@@ -64,6 +67,7 @@
         }
         initializeEntry(&table,name);
         fprintf(fptr,"COP %d %d\n",addr,tmp);
+		asmLineCount++;
     }
 
     void print(char* name){
@@ -77,6 +81,7 @@
             exit(-2);            
         }
         fprintf(fptr,"PRI %d\n",addr);
+		asmLineCount++;
     }
 
     int makeString(char *dest, char *s1, char *s2, char *s3){
@@ -92,44 +97,42 @@
       }
     }
 
-	int get_nb_lignes_asm(){
-		int count = 0;
-		fclose(fptr);
-		// Open the file
-    	FILE* fp = fopen(FILENAME, "r");
-		// Extract characters from file and store in character c
-    	for (char c = getc(fp); c != EOF; c = getc(fp))
-        	if (c == '\n') // Increment count if this character is newline
-            	count = count + 1;
-		fclose(fp);
-		fptr=fopen(FILENAME,"a"); // Append
-		//printf("Test get nb lignes %d\n",count);
-		return count;
-	}
+    int get_nb_lignes_asm(){
+		return asmLineCount;
+    }
 
-	void patch(int lineNumber, int to) {
-		/* Mémorisation pour patcher apres la compilation. */
+	void replaceTokenAtLine(int value, int whereToReplace){
+		value--;		
 		fclose(fptr);
-    	FILE* fp = fopen(FILENAME, "r");
-		FILE* fptmp = fopen("delete.tmp","w+");
-		char line[100]; /* or other suitable maximum line size */
-		int count = 1;
-		for (char c = getc(fp); c != EOF; c = getc(fp)) {
-			if (count == lineNumber && c == '?') {
-				fprintf(fptmp,"%d",to);
-			} else {
-			fputc(c, fptmp);
-        	if (c == '\n') // Increment count if this character is newline
-            	count = count + 1;
+		int count = 0;
+		FILE * fptr2 = fopen(FILENAME,"r");
+		FILE* fptmp = fopen("./output_asm/.tmp","w");
+		fseek(fptr2, 0, SEEK_SET);
+		char buf[100];
+		//Aller jusqu'à la ligne précédent la cible.
+		while (fgets( buf, 100, fptr2 ) != NULL) 
+		{
+			count++;
+			if(count==whereToReplace){
+				//Buf est la ligne cible
+				int index;
+				for(index=0; buf[index]!='\0';index++){
+					if(buf[index]=='?'){
+						fprintf(fptmp,"%d",value);
+					}else{
+						fputc(buf[index], fptmp);	
+					}
+				}
 			}
+			else
+				fprintf(fptmp,"%s",buf);
 		}
-		fclose(fp);
+		fclose(fptr2);
 		fclose(fptmp);
-		remove(FILENAME);https://github.com/PiKouri/4a-projet-sys-info.git
-		rename("delete.tmp", FILENAME);
-		fptr=fopen(FILENAME,"a"); // Append
-		//labels[from] = to ;
-	}
+		remove(FILENAME);
+		rename("./output_asm/.tmp", FILENAME);
+		fptr=fopen(FILENAME,"a");
+	};
 
 %}
 
@@ -142,7 +145,9 @@
 %type <str> ID_EGAL
 %type <str> EXPRESSION
 %type <nb> IF
+%type <nb> ELSE
 %type <nb> WHILE
+%type <nb> WHILE_CONDITION
 
 
 /* Priorité */
@@ -194,57 +199,40 @@ ID_EGAL :
 
 INSTRUCTIONS : 
 	/* epsilon */
-	| IF INSTRUCTION tELSE 
-		{
-			int current = get_nb_lignes_asm() ; 
-			patch($1, current+1) ;
-			fprintf(fptr, "JMP ?\n") ;
-			$1 = current+1 ;
-			printf("ELSE ");
-		} 
-		INSTRUCTION 
-		{
-			int current = get_nb_lignes_asm() ;
-			patch($1, current) ;
-		} INSTRUCTIONS
- 	| IF INSTRUCTION 
-		{
-			int current = get_nb_lignes_asm() ;
-			patch($1, current) ;
-		} INSTRUCTIONS
-	| WHILE INSTRUCTION 
-		{
-			fprintf(fptr, "JMP %d\n",lineWhileJMP) ;
-			int current = get_nb_lignes_asm() ;
-			patch($1, current) ;
-		} INSTRUCTIONS
 	| INSTRUCTION INSTRUCTIONS 
 	;
+
+INSTRUCTION : 
+	  {printf("BLOC BEGIN\n");} BLOC {printf("BLOC END\n");}
+	| EXPRESSION tPOINTVIRGULE {printf("INSTRUCTION %s;\n",$1);}
+	| IF INSTRUCTION {fprintf(fptr, "JMP ?\n"); asmLineCount++;replaceTokenAtLine(get_nb_lignes_asm(),$1); printf("ELSE ");} ELSE INSTRUCTION {replaceTokenAtLine(get_nb_lignes_asm(),$4);}
+	| IF INSTRUCTION {replaceTokenAtLine(get_nb_lignes_asm(),$1);}
+	| WHILE WHILE_CONDITION INSTRUCTION {fprintf(fptr, "JMP %d\n",$1);asmLineCount++;replaceTokenAtLine(get_nb_lignes_asm(),$2);}
+	;
+
+BLOC : tAO INSTRUCTIONS tAF;
 
 IF : tIF tPO EXPRESSION tPF 
 		{
 			printf("IF (%s) ",$3);
 			int tmp = popEntry(&table);
+			$$ = get_nb_lignes_asm() ;
 			fprintf(fptr, "JMF %d ?\n", tmp) ;
-			int ligne = get_nb_lignes_asm() ;
-			$$ = ligne ;
+			asmLineCount++;
 		};
 
-WHILE : tWHILE {lineWhileJMP=get_nb_lignes_asm();} tPO EXPRESSION tPF 
+ELSE : tELSE {$$=get_nb_lignes_asm()-1;};
+
+WHILE : tWHILE {$$ = get_nb_lignes_asm() ;};
+
+WHILE_CONDITION : tPO EXPRESSION tPF 
 		{
-			printf("WHILE (%s) ",$4);
+			printf("WHILE (%s) ",$2);
 			int tmp = popEntry(&table);
+			$$ = get_nb_lignes_asm() ;
 			fprintf(fptr, "JMF %d ?\n", tmp) ;
-			int ligne = get_nb_lignes_asm() ;
-			$$ = ligne ;
+			asmLineCount++;
 		};
-
-INSTRUCTION : 
-	{printf("BLOC ");} BLOC
-	| EXPRESSION tPOINTVIRGULE {printf("INSTRUCTION %s;\n",$1);}
-	;
-
-BLOC : tAO INSTRUCTIONS tAF;
 
 EXPRESSION :
 	tNB                                       {sprintf($$,"%d",$1);cst_to_vartemp($1);}
@@ -260,6 +248,7 @@ EXPRESSION :
 	| EXPRESSION tINF EXPRESSION              {makeString($$,$1,"<",$3);operation("INF");}
 	| EXPRESSION tSUP EXPRESSION              {makeString($$,$1,">",$3);operation("SUP");}
 	;
+
 
 %%
 

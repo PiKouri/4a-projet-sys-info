@@ -1,0 +1,40 @@
+main()
+{
+	int nbr1, nbr2;
+	int i = 0;
+	int pgcd = 1;
+	int rest1, rest2;
+	
+	const nbr_1_value = 7, nbr_2_value = 21;
+	const pgcd_attendu = 7;
+
+	if(nbr_1_value < nbr_2_value){
+	 nbr1 = nbr_1_value;
+	 nbr2 = nbr_2_value;
+	}else{
+	 nbr1 = nbr_2_value;
+	 nbr2 = nbr_1_value;
+	}
+	
+	i=1;
+	while((i-1)<nbr1){
+	    
+	 rest1=nbr1;
+	 while((rest1+1)>i){
+	  rest1=rest1-i;
+	 }
+	 
+	 rest2=nbr2;
+	 while((rest2+1)>i){
+	  rest2=rest2-i;
+	 }
+	 
+	 if(rest1==0){
+	  if(rest2==0)
+	    pgcd = i;
+	 }
+	 i=i+1;
+	}
+	printf(pgcd_attendu);
+	printf(pgcd);
+}
