@@ -1,0 +1,2 @@
+vhdl work "Memoire_Donnees.vhd"
+vhdl work "testMemoireDonnees.vhd"
