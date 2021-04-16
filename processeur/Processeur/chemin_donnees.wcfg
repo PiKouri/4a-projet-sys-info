@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/testCheminDonnees_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="numeric_std" />
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_unsigned" />
+            <top_module name="testchemindonnees" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="10" />
+   <wvobject fp_name="/testchemindonnees/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testchemindonnees/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testchemindonnees/pout" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">pout[7:0]</obj_property>
+      <obj_property name="ObjectShortName">pout[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testchemindonnees/clk_period" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_period</obj_property>
+      <obj_property name="ObjectShortName">clk_period</obj_property>
+   </wvobject>
+   <wvobject fp_name="group26" type="group">
+      <obj_property name="label">etage1</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/testchemindonnees/uut/a_etage1" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">a_etage1[7:0]</obj_property>
+         <obj_property name="ObjectShortName">a_etage1[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/op_etage1" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">op_etage1[7:0]</obj_property>
+         <obj_property name="ObjectShortName">op_etage1[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/b_etage1" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">b_etage1[7:0]</obj_property>
+         <obj_property name="ObjectShortName">b_etage1[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/c_etage1" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">c_etage1[7:0]</obj_property>
+         <obj_property name="ObjectShortName">c_etage1[7:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group27" type="group">
+      <obj_property name="label">etage2</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/testchemindonnees/uut/a_etage2" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">a_etage2[7:0]</obj_property>
+         <obj_property name="ObjectShortName">a_etage2[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/op_etage2" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">op_etage2[7:0]</obj_property>
+         <obj_property name="ObjectShortName">op_etage2[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/b_etage2" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">b_etage2[7:0]</obj_property>
+         <obj_property name="ObjectShortName">b_etage2[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/c_etage2" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">c_etage2[7:0]</obj_property>
+         <obj_property name="ObjectShortName">c_etage2[7:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group28" type="group">
+      <obj_property name="label">etage3</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/testchemindonnees/uut/a_etage3" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">a_etage3[7:0]</obj_property>
+         <obj_property name="ObjectShortName">a_etage3[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/op_etage3" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">op_etage3[7:0]</obj_property>
+         <obj_property name="ObjectShortName">op_etage3[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/b_etage3" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">b_etage3[7:0]</obj_property>
+         <obj_property name="ObjectShortName">b_etage3[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/c_etage3" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">c_etage3[7:0]</obj_property>
+         <obj_property name="ObjectShortName">c_etage3[7:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group29" type="group">
+      <obj_property name="label">etage4</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/testchemindonnees/uut/a_etage4" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">a_etage4[7:0]</obj_property>
+         <obj_property name="ObjectShortName">a_etage4[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/op_etage4" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">op_etage4[7:0]</obj_property>
+         <obj_property name="ObjectShortName">op_etage4[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/b_etage4" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">b_etage4[7:0]</obj_property>
+         <obj_property name="ObjectShortName">b_etage4[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/c_etage4" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">c_etage4[7:0]</obj_property>
+         <obj_property name="ObjectShortName">c_etage4[7:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group30" type="group">
+      <obj_property name="label">etage5</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/testchemindonnees/uut/a_etage5" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">a_etage5[7:0]</obj_property>
+         <obj_property name="ObjectShortName">a_etage5[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/op_etage5" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">op_etage5[7:0]</obj_property>
+         <obj_property name="ObjectShortName">op_etage5[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/b_etage5" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">b_etage5[7:0]</obj_property>
+         <obj_property name="ObjectShortName">b_etage5[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/c_etage5" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">c_etage5[7:0]</obj_property>
+         <obj_property name="ObjectShortName">c_etage5[7:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/testchemindonnees/uut/MemInstruction/compteur" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">compteur[7:0]</obj_property>
+      <obj_property name="ObjectShortName">compteur[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+</wave_config>

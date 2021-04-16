@@ -1,0 +1,326 @@
+Release 13.4 - xst O.87xd (lin64)
+Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
+--> 
+Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.15 secs
+ 
+--> 
+Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.15 secs
+ 
+--> 
+Reading design: Chemin_Donnees.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Parsing
+  3) HDL Elaboration
+  4) HDL Synthesis
+       4.1) HDL Synthesis Report
+  5) Advanced HDL Synthesis
+       5.1) Advanced HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Partition Report
+  8) Design Summary
+       8.1) Primitive and Black Box Usage
+       8.2) Device utilization summary
+       8.3) Partition Resource Summary
+       8.4) Timing Report
+            8.4.1) Clock Information
+            8.4.2) Asynchronous Control Signals Information
+            8.4.3) Timing Summary
+            8.4.4) Timing Details
+            8.4.5) Cross Clock Domains Report
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "Chemin_Donnees.prj"
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "Chemin_Donnees"
+Output Format                      : NGC
+Target Device                      : xc6slx16-3-csg324
+
+---- Source Options
+Top Module Name                    : Chemin_Donnees
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Shift Register Extraction          : YES
+ROM Style                          : Auto
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Shift Register Minimum Size        : 2
+Use DSP Block                      : Auto
+Automatic Register Balancing       : No
+
+---- Target Options
+LUT Combining                      : Auto
+Reduce Control Sets                : Auto
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 100000
+Add Generic Clock Buffer(BUFG)     : 16
+Register Duplication               : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Auto
+Use Synchronous Set                : Auto
+Use Synchronous Reset              : Auto
+Pack IO Registers into IOBs        : Auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Power Reduction                    : NO
+Keep Hierarchy                     : No
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+DSP48 Utilization Ratio            : 100
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+INFO:Xst - Part-select index evaluated to out of bound value may lead to incorrect synthesis results; it is recommended not to use them in RTL
+
+=========================================================================
+*                          HDL Parsing                                  *
+=========================================================================
+Parsing VHDL file "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Memoire_Instructions.vhd" into library work
+Parsing entity <Memoire_Instructions>.
+Parsing architecture <Behavioral> of entity <memoire_instructions>.
+Parsing VHDL file "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Memoire_Donnees.vhd" into library work
+Parsing entity <Memoire_Donnees>.
+Parsing architecture <Behavioral> of entity <memoire_donnees>.
+Parsing VHDL file "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Etage_Pipeline.vhd" into library work
+Parsing entity <Etage_Pipeline>.
+Parsing architecture <Behavioral> of entity <etage_pipeline>.
+Parsing VHDL file "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Banc_Registres.vhd" into library work
+Parsing entity <Banc_Registres>.
+Parsing architecture <Behavioral> of entity <banc_registres>.
+Parsing VHDL file "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/ALU.vhd" into library work
+Parsing entity <ALU>.
+Parsing architecture <Behavioral> of entity <alu>.
+Parsing VHDL file "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" into library work
+Parsing entity <Chemin_Donnees>.
+Parsing architecture <Behavioral> of entity <chemin_donnees>.
+
+=========================================================================
+*                            HDL Elaboration                            *
+=========================================================================
+
+Elaborating entity <Chemin_Donnees> (architecture <Behavioral>) from library <work>.
+WARNING:HDLCompiler:871 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" Line 106: Using initial value '0' for null14 since it is never assigned
+WARNING:HDLCompiler:871 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" Line 107: Using initial value "00000000" for null8 since it is never assigned
+WARNING:HDLCompiler:871 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" Line 111: Using initial value "00000000" for null84 since it is never assigned
+WARNING:HDLCompiler:871 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" Line 113: Using initial value "00000000" for null86 since it is never assigned
+WARNING:HDLCompiler:871 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" Line 114: Using initial value "00000000" for null87 since it is never assigned
+WARNING:HDLCompiler:871 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" Line 116: Using initial value "00000000" for null89 since it is never assigned
+WARNING:HDLCompiler:871 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" Line 118: Using initial value "00000000" for null8b since it is never assigned
+WARNING:HDLCompiler:871 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" Line 119: Using initial value "00000000" for null8c since it is never assigned
+WARNING:HDLCompiler:871 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" Line 121: Using initial value "00000000" for null8e since it is never assigned
+WARNING:HDLCompiler:871 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" Line 123: Using initial value "00000000" for null8g since it is never assigned
+WARNING:HDLCompiler:871 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" Line 125: Using initial value "000" for null3 since it is never assigned
+WARNING:HDLCompiler:871 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" Line 126: Using initial value "0000" for null4 since it is never assigned
+WARNING:HDLCompiler:871 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" Line 130: Using initial value '0' for bulle since it is never assigned
+
+Elaborating entity <Memoire_Instructions> (architecture <Behavioral>) from library <work>.
+
+Elaborating entity <Etage_Pipeline> (architecture <Behavioral>) from library <work>.
+
+Elaborating entity <Banc_Registres> (architecture <Behavioral>) from library <work>.
+
+Elaborating entity <ALU> (architecture <Behavioral>) from library <work>.
+
+Elaborating entity <Memoire_Donnees> (architecture <Behavioral>) from library <work>.
+WARNING:Xst:2972 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 172. All outputs of instance <MemInstruction> of block <Memoire_Instructions> are unconnected in block <Chemin_Donnees>. Underlying logic will be removed.
+WARNING:Xst:2972 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 185. All outputs of instance <LIDI> of block <Etage_Pipeline> are unconnected in block <Chemin_Donnees>. Underlying logic will be removed.
+WARNING:Xst:2972 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 200. All outputs of instance <BancRegistre> of block <Banc_Registres> are unconnected in block <Chemin_Donnees>. Underlying logic will be removed.
+WARNING:Xst:2972 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 215. All outputs of instance <DIEX> of block <Etage_Pipeline> are unconnected in block <Chemin_Donnees>. Underlying logic will be removed.
+WARNING:Xst:2972 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 230. All outputs of instance <UAL> of block <ALU> are unconnected in block <Chemin_Donnees>. Underlying logic will be removed.
+WARNING:Xst:2972 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 241. All outputs of instance <EXMEM> of block <Etage_Pipeline> are unconnected in block <Chemin_Donnees>. Underlying logic will be removed.
+WARNING:Xst:2972 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 256. All outputs of instance <MemDonnees> of block <Memoire_Donnees> are unconnected in block <Chemin_Donnees>. Underlying logic will be removed.
+WARNING:Xst:2972 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 265. All outputs of instance <MEMRE> of block <Etage_Pipeline> are unconnected in block <Chemin_Donnees>. Underlying logic will be removed.
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <Chemin_Donnees>.
+    Related source file is "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd".
+INFO:Xst:3210 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 185: Output port <Cout> of the instance <LIDI> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 200: Output port <QA> of the instance <BancRegistre> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 200: Output port <QB> of the instance <BancRegistre> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 215: Output port <Cout> of the instance <DIEX> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 230: Output port <S> of the instance <UAL> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 230: Output port <N> of the instance <UAL> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 230: Output port <O> of the instance <UAL> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 230: Output port <Z> of the instance <UAL> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 230: Output port <C> of the instance <UAL> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 241: Output port <Cout> of the instance <EXMEM> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 256: Output port <pOUT> of the instance <MemDonnees> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" line 265: Output port <Cout> of the instance <MEMRE> is unconnected or connected to loadless signal.
+    Summary:
+	no macro.
+Unit <Chemin_Donnees> synthesized.
+
+=========================================================================
+HDL Synthesis Report
+
+Found no macro
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Found no macro
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <Chemin_Donnees> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block Chemin_Donnees, actual ratio is 0.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Found no macro
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Design Summary                             *
+=========================================================================
+
+Top Level Output File Name         : Chemin_Donnees.ngc
+
+Primitive and Black Box Usage:
+------------------------------
+# BELS                             : 1
+#      GND                         : 1
+# IO Buffers                       : 8
+#      OBUF                        : 8
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 6slx16csg324-3 
+
+
+Slice Logic Utilization: 
+
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:      0
+   Number with an unused Flip Flop:       0  out of      0         
+   Number with an unused LUT:             0  out of      0         
+   Number of fully used LUT-FF pairs:     0  out of      0         
+   Number of unique control sets:         0
+
+IO Utilization: 
+ Number of IOs:                          10
+ Number of bonded IOBs:                   8  out of    232     3%  
+
+Specific Feature Utilization:
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+Timing Report
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+No clock signals found in this design
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -3
+
+   Minimum period: No path found
+   Minimum input arrival time before clock: No path found
+   Maximum output required time after clock: No path found
+   Maximum combinational path delay: No path found
+
+Timing Details:
+---------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+
+Cross Clock Domains Report:
+--------------------------
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 4.00 secs
+Total CPU time to Xst completion: 3.08 secs
+ 
+--> 
+
+
+Total memory usage is 389152 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   21 (   0 filtered)
+Number of infos    :   13 (   0 filtered)
+

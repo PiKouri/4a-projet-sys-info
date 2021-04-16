@@ -1,5 +1,5 @@
 ISim log file
-Running: /home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/testMemoireDonnees_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb /home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/testMemoireDonnees_isim_beh.wdb 
+Running: /home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/testCheminDonnees_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb /home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/testCheminDonnees_isim_beh.wdb 
 ISim O.87xd (signature 0x8ddf5b5d)
 WARNING: A WEBPACK license was found.
 WARNING: Please use Xilinx License Configuration Manager to check out a full ISim license.
@@ -9,6 +9,11 @@ Time resolution is 1 ps
 # onerror resume
 # wave add /
 # run 1000 ns
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
+# run 1.00us
+# restart
+# run 1.00us
 Simulator is doing circuit initialization process.
 Finished circuit initialization process.
 # exit 0

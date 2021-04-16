@@ -1,0 +1,7 @@
+vhdl work "Memoire_Instructions.vhd"
+vhdl work "Memoire_Donnees.vhd"
+vhdl work "Etage_Pipeline.vhd"
+vhdl work "Banc_Registres.vhd"
+vhdl work "ALU.vhd"
+vhdl work "Chemin_Donnees.vhd"
+vhdl work "testCheminDonnees.vhd"

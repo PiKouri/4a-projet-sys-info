@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -lib "secureip" -o "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/testMemoireDonnees_isim_beh.exe" -prj "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/testMemoireDonnees_beh.prj" "work.testMemoireDonnees" 
+-intstyle "ise" -incremental -lib "secureip" -o "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/testCheminDonnees_isim_beh.exe" -prj "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/testCheminDonnees_beh.prj" "work.testCheminDonnees" 

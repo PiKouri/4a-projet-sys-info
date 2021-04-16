@@ -1,1 +1,6 @@
+work	"ALU.vhd"
+work	"Banc_Registres.vhd"
+work	"Chemin_Donnees.vhd"
+work	"Etage_Pipeline.vhd"
 work	"Memoire_Donnees.vhd"
+work	"Memoire_Instructions.vhd"
