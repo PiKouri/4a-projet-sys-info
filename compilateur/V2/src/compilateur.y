@@ -33,7 +33,7 @@
 
     void cst_to_vartemp(int cst) {
         char str[10];
-        sprintf(str,"tmp%d",itmp++);
+        sprintf(str,"_tmp%d",itmp++);
         int tmp = pushEntry(&table,INT,str);
         initializeEntry(&table,str);
         fprintf(fptr,"AFC %d %d\n",tmp,cst);
