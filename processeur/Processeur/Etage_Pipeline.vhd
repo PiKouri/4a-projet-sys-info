@@ -38,17 +38,18 @@ entity Etage_Pipeline is
            OPout : out  STD_LOGIC_VECTOR (7 downto 0);
            Bout : out  STD_LOGIC_VECTOR (7 downto 0);
            Cout : out  STD_LOGIC_VECTOR (7 downto 0);
-			  CLK : in STD_LOGIC;
-			  Bulle : in STD_LOGIC);
+			  CLK : in STD_LOGIC);
+			  --Bulle : in STD_LOGIC);
 end Etage_Pipeline;
 
 architecture Behavioral of Etage_Pipeline is
 
 begin
 	
-	process(CLK,Bulle)
+	process(CLK)
 	begin
-		if (rising_edge(CLK) and Bulle='0') then
+		--if (rising_edge(CLK) and Bulle='0') then
+		if (rising_edge(CLK)) then
 			Aout <= A;
 			OPout<=OP;
 			Bout<=B;

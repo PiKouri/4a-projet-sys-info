@@ -9,13 +9,13 @@
          <ClosedNodesVersion>2</ClosedNodesVersion>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem>Chemin_Donnees - Behavioral (/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd)</SelectedItem>
+         <SelectedItem>Chemin_Donnees - Behavioral (/home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/Chemin_Donnees.vhd)</SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff00000000000000010000000100000000000000000000000000000000020200000001000000010000006400000298000000020000000000000000000000000200000064ffffffff000000810000000300000002000002980000000100000003000000000000000100000003</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >true</UserChangedColumnWidths>
-      <CurrentItem>Chemin_Donnees - Behavioral (/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd)</CurrentItem>
+      <CurrentItem>Chemin_Donnees - Behavioral (/home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/Chemin_Donnees.vhd)</CurrentItem>
    </ItemView>
    <ItemView engineview="SynthesisOnly" sourcetype="DESUT_VHDL_ARCHITECTURE" guiview="Process" >
       <ClosedNodes>
@@ -68,13 +68,13 @@
          <ClosedNode>/testMemoireDonnees - behavior |home|hok|4A|PSI|4a-projet-sys-info|processeur|Processeur|testMemoireDonnees.vhd</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem>testCheminDonnees - behavior (/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/testCheminDonnees.vhd)</SelectedItem>
+         <SelectedItem>testCheminDonnees - behavior (/home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/testCheminDonnees.vhd)</SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >1</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000202000000010000000100000064000002ac000000020000000000000000000000000200000064ffffffff000000810000000300000002000002ac0000000100000003000000000000000100000003</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >true</UserChangedColumnWidths>
-      <CurrentItem>testCheminDonnees - behavior (/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/testCheminDonnees.vhd)</CurrentItem>
+      <CurrentItem>testCheminDonnees - behavior (/home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/testCheminDonnees.vhd)</CurrentItem>
    </ItemView>
    <ItemView engineview="BehavioralSim" sourcetype="" guiview="Process" >
       <ClosedNodes>
@@ -82,13 +82,13 @@
          <ClosedNode>Design Utilities</ClosedNode>
       </ClosedNodes>
       <SelectedItems>
-         <SelectedItem/>
+         <SelectedItem></SelectedItem>
       </SelectedItems>
       <ScrollbarPosition orientation="vertical" >0</ScrollbarPosition>
       <ScrollbarPosition orientation="horizontal" >0</ScrollbarPosition>
       <ViewHeaderState orientation="horizontal" >000000ff000000000000000100000001000000000000000000000000000000000000000000000000f6000000010000000100000000000000000000000064ffffffff000000810000000000000001000000f60000000100000000</ViewHeaderState>
       <UserChangedColumnWidths orientation="horizontal" >false</UserChangedColumnWidths>
-      <CurrentItem/>
+      <CurrentItem></CurrentItem>
    </ItemView>
    <ItemView engineview="BehavioralSim" sourcetype="DESUT_VHDL_ARCHITECTURE" guiview="Process" >
       <ClosedNodes>
@@ -104,5 +104,5 @@
       <CurrentItem>Simulate Behavioral Model</CurrentItem>
    </ItemView>
    <SourceProcessView>000000ff0000000000000002000001620000011b01000000040100000002</SourceProcessView>
-   <CurrentView>Behavioral Simulation</CurrentView>
+   <CurrentView>Implementation</CurrentView>
 </Project>

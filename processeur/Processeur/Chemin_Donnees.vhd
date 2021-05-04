@@ -61,8 +61,7 @@ architecture Behavioral of Chemin_Donnees is
            OPout : out  STD_LOGIC_VECTOR (7 downto 0);
            Bout : out  STD_LOGIC_VECTOR (7 downto 0);
            Cout : out  STD_LOGIC_VECTOR (7 downto 0);
-			  CLK : in STD_LOGIC;
-			  Bulle : in STD_LOGIC);
+			  CLK : in STD_LOGIC);
 	end component;
 	
 	component ALU is
@@ -106,13 +105,12 @@ architecture Behavioral of Chemin_Donnees is
 	signal null14 : STD_LOGIC := '0';
 	signal null8 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null81 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
-	signal null82 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null83 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null84 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null85 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null86 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null87 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
-	signal null88 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
+	signal S_UAL_etage3 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null89 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null8A : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null8B : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
@@ -124,7 +122,7 @@ architecture Behavioral of Chemin_Donnees is
 	
 	signal null3 : STD_LOGIC_VECTOR(2 downto 0) := (others=>'0');
 	signal null4 : STD_LOGIC_VECTOR(3 downto 0) := (others=>'0');
-	
+
 -- General
 
 	signal bulle : STD_LOGIC := '0';
@@ -142,14 +140,15 @@ architecture Behavioral of Chemin_Donnees is
 	signal op_etage2 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal b_etage2 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal c_etage2 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
-	
+	signal QAout : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
+	signal mux_out_etage2 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 -- Etage 3
 
 	signal a_etage3 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal op_etage3 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal b_etage3 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal c_etage3 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
-	
+	signal mux_out_etage3 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 -- Etage 4
 
 	signal a_etage4 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
@@ -191,38 +190,45 @@ begin
 		OPout => op_etage2,
 		Bout => b_etage2,
 		Cout => null81,
-		CLK => CLK,
-		Bulle => bulle
+		CLK => CLK
 	);
 	
 -- Etage 2
 	
 	BancRegistre : Banc_Registres PORT MAP (
-		 A => null4,
+		 A => b_etage1(3 downto 0),
 		 B => null4,
 		 aW => a_etage5(3 downto 0),
 		 W => lc_etage5,
 		 DATA => b_etage5,
 		 RST => RST,
 		 CLK => CLK,
-		 QA => null82,
+		 QA => QAout,
 		 QB => null83
 	  );
 	  
-	lc_etage5 <= '1' when op_etage5="00000110" 
-				else '0'; -- AFC
-
+	lc_etage5 <= '1' when op_etage5="00000110" or op_etage5="00000101" -- AFC or COP
+				else '0'; 
+	
+	mux_out_etage2 <= QAout when op_etage2="00000101" --COP
+				else b_etage2; 
+				
+	bulle <= '1' when bulle='0' and (op_etage1="00000110" or op_etage1="00000101") and rising_edge(CLK)--ACF or COP
+				else '0' when bulle='1' and (op_etage4="00000110" or op_etage4="00000101") and rising_edge(CLK) --ACF or COP
+				else bulle;
+	--'1' when op_etage1="00000110" or op_etage1="00000101" --ACF or COP
+		--	else '0';
+	
 	DIEX : Etage_Pipeline PORT MAP(
 		A => a_etage2,
 		OP => op_etage2,
-		B => b_etage2,
+		B => mux_out_etage2,
 		C => null84,
 		Aout => a_etage3,
 		OPout => op_etage3,
 		Bout => b_etage3,
 		Cout => null85,
-		CLK => CLK,
-		Bulle => bulle	
+		CLK => CLK
 	);
 	
 -- Etage 3
@@ -230,13 +236,17 @@ begin
 	UAL : ALU PORT MAP (
 	 A => null86,
 	 B => null87,
-	 Ctrl_Alu => null3,
-	 S => null88,
+	 Ctrl_Alu => op_etage3(2 downto 0), --LC_etage3
+	 S => S_UAL_etage3,
 	 N => null1,
 	 O => null11,
 	 Z => null12,
 	 C => null13
   );
+  
+  
+  mux_out_etage3 <= S_UAL_etage3 when op_etage3="00000001" or op_etage3="00000010" or op_etage3="00000011" --ADD SOU MUL DIV
+				else b_etage3; 
 
 	EXMEM : Etage_Pipeline PORT MAP(
 		A => a_etage3,
@@ -247,8 +257,7 @@ begin
 		OPout => op_etage4,
 		Bout => b_etage4,
 		Cout => null8A,
-		CLK => CLK,
-		Bulle => bulle	
+		CLK => CLK
 	);
 	
 -- Etage 4
@@ -271,8 +280,7 @@ begin
 		OPout => op_etage5,
 		Bout => b_etage5,
 		Cout => null8F,
-		CLK => CLK,
-		Bulle => bulle	
+		CLK => CLK
 	);
 
 -- Etage 5

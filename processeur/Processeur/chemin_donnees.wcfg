@@ -3,7 +3,7 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/testCheminDonnees_isim_beh.wdb" id="1" type="auto">
+      <db_ref path="/home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/testCheminDonnees_isim_beh1.wdb" id="1" type="auto">
          <top_modules>
             <top_module name="numeric_std" />
             <top_module name="std_logic_1164" />
@@ -13,7 +13,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="10" />
+   <WVObjectSize size="13" />
    <wvobject fp_name="/testchemindonnees/clk" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -69,6 +69,10 @@
          <obj_property name="ElementShortName">c_etage2[7:0]</obj_property>
          <obj_property name="ObjectShortName">c_etage2[7:0]</obj_property>
       </wvobject>
+   </wvobject>
+   <wvobject fp_name="/testchemindonnees/uut/BancRegistre/qa" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">qa[7:0]</obj_property>
+      <obj_property name="ObjectShortName">qa[7:0]</obj_property>
    </wvobject>
    <wvobject fp_name="group28" type="group">
       <obj_property name="label">etage3</obj_property>
@@ -134,5 +138,13 @@
       <obj_property name="ElementShortName">compteur[7:0]</obj_property>
       <obj_property name="ObjectShortName">compteur[7:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testchemindonnees/uut/BancRegistre/br" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">br[0:15]</obj_property>
+      <obj_property name="ObjectShortName">br[0:15]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testchemindonnees/uut/bulle" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">bulle</obj_property>
+      <obj_property name="ObjectShortName">bulle</obj_property>
    </wvobject>
 </wave_config>

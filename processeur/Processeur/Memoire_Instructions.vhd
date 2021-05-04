@@ -46,13 +46,15 @@ end Memoire_Instructions;
 architecture Behavioral of Memoire_Instructions is
 	type memoire is array (0 to 255) of STD_LOGIC_VECTOR(31 downto 0);
 	signal mem : memoire:=(
-		0=>"00000110"&"00000000"&"00000011"&"00000000",	
-		1=>"00000100"&"00000001"&"00000011"&"00000000",
+		0=>"00000110"&"00000000"&"00000011"&"00000000",	--AFC 0 3
+		1=>"00000101"&"00000011"&"00000000"&"00000000", --COP 3 0
+
 		others=>(others=>'0'));
 	signal pOUT : STD_LOGIC_VECTOR (31 downto 0);
 	signal compteur : STD_LOGIC_VECTOR (7 downto 0) :=(others=>'0');
 begin
-	 pOUT <= mem(TO_INTEGER(UNSIGNED(compteur)));
+	 pOUT <= mem(TO_INTEGER(UNSIGNED(compteur))) when EN='0'
+				else (others=>'0');
 	 OPout <= pOUT(31 downto 24);
 	 Aout <= pOUT(23 downto 16);
 	 Bout <= pOUT(15 downto 8);
