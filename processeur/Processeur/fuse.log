@@ -1,19 +1,19 @@
-Running: /usr/local/insa/Xilinx.ISE/13.4/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/testCheminDonnees_isim_beh.exe -prj /home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/testCheminDonnees_beh.prj work.testCheminDonnees 
+Running: /usr/local/insa/Xilinx.ISE/13.4/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/testCheminDonnees_isim_beh.exe -prj /home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/testCheminDonnees_beh.prj work.testCheminDonnees 
 ISim O.87xd (signature 0x8ddf5b5d)
 Number of CPUs detected in this system: 12
 Turning on mult-threading, number of parallel sub-compilation jobs: 24 
 Determining compilation order of HDL files
-Parsing VHDL file "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Memoire_Instructions.vhd" into library work
-Parsing VHDL file "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Memoire_Donnees.vhd" into library work
-Parsing VHDL file "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Etage_Pipeline.vhd" into library work
-Parsing VHDL file "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Banc_Registres.vhd" into library work
-Parsing VHDL file "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/ALU.vhd" into library work
-Parsing VHDL file "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Chemin_Donnees.vhd" into library work
-Parsing VHDL file "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/testCheminDonnees.vhd" into library work
+Parsing VHDL file "/home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/Memoire_Instructions.vhd" into library work
+Parsing VHDL file "/home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/Memoire_Donnees.vhd" into library work
+Parsing VHDL file "/home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/Etage_Pipeline.vhd" into library work
+Parsing VHDL file "/home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/Banc_Registres.vhd" into library work
+Parsing VHDL file "/home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/ALU.vhd" into library work
+Parsing VHDL file "/home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/Chemin_Donnees.vhd" into library work
+Parsing VHDL file "/home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/testCheminDonnees.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 98572 KB
-Fuse CPU Usage: 750 ms
+Fuse Memory Usage: 98592 KB
+Fuse CPU Usage: 860 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package numeric_std
@@ -29,7 +29,7 @@ Compiling architecture behavior of entity testchemindonnees
 Time Resolution for simulation is 1ps.
 Waiting for 1 sub-compilation(s) to finish...
 Compiled 18 VHDL Units
-Built simulation executable /home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/testCheminDonnees_isim_beh.exe
-Fuse Memory Usage: 1723272 KB
-Fuse CPU Usage: 880 ms
-GCC CPU Usage: 300 ms
+Built simulation executable /home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/testCheminDonnees_isim_beh.exe
+Fuse Memory Usage: 1723308 KB
+Fuse CPU Usage: 1050 ms
+GCC CPU Usage: 480 ms

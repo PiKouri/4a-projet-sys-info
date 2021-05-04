@@ -3,7 +3,7 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="/home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/testCheminDonnees_isim_beh1.wdb" id="1" type="auto">
+      <db_ref path="/home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/testCheminDonnees_isim_beh.wdb" id="1" type="auto">
          <top_modules>
             <top_module name="numeric_std" />
             <top_module name="std_logic_1164" />
@@ -13,7 +13,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="13" />
+   <WVObjectSize size="12" />
    <wvobject fp_name="/testchemindonnees/clk" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -33,13 +33,13 @@
    <wvobject fp_name="group26" type="group">
       <obj_property name="label">etage1</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <wvobject fp_name="/testchemindonnees/uut/a_etage1" type="array" db_ref_id="1">
-         <obj_property name="ElementShortName">a_etage1[7:0]</obj_property>
-         <obj_property name="ObjectShortName">a_etage1[7:0]</obj_property>
-      </wvobject>
       <wvobject fp_name="/testchemindonnees/uut/op_etage1" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">op_etage1[7:0]</obj_property>
          <obj_property name="ObjectShortName">op_etage1[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/a_etage1" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">a_etage1[7:0]</obj_property>
+         <obj_property name="ObjectShortName">a_etage1[7:0]</obj_property>
       </wvobject>
       <wvobject fp_name="/testchemindonnees/uut/b_etage1" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">b_etage1[7:0]</obj_property>
@@ -53,13 +53,13 @@
    <wvobject fp_name="group27" type="group">
       <obj_property name="label">etage2</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <wvobject fp_name="/testchemindonnees/uut/a_etage2" type="array" db_ref_id="1">
-         <obj_property name="ElementShortName">a_etage2[7:0]</obj_property>
-         <obj_property name="ObjectShortName">a_etage2[7:0]</obj_property>
-      </wvobject>
       <wvobject fp_name="/testchemindonnees/uut/op_etage2" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">op_etage2[7:0]</obj_property>
          <obj_property name="ObjectShortName">op_etage2[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/a_etage2" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">a_etage2[7:0]</obj_property>
+         <obj_property name="ObjectShortName">a_etage2[7:0]</obj_property>
       </wvobject>
       <wvobject fp_name="/testchemindonnees/uut/b_etage2" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">b_etage2[7:0]</obj_property>
@@ -70,20 +70,16 @@
          <obj_property name="ObjectShortName">c_etage2[7:0]</obj_property>
       </wvobject>
    </wvobject>
-   <wvobject fp_name="/testchemindonnees/uut/BancRegistre/qa" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">qa[7:0]</obj_property>
-      <obj_property name="ObjectShortName">qa[7:0]</obj_property>
-   </wvobject>
    <wvobject fp_name="group28" type="group">
       <obj_property name="label">etage3</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <wvobject fp_name="/testchemindonnees/uut/a_etage3" type="array" db_ref_id="1">
-         <obj_property name="ElementShortName">a_etage3[7:0]</obj_property>
-         <obj_property name="ObjectShortName">a_etage3[7:0]</obj_property>
-      </wvobject>
       <wvobject fp_name="/testchemindonnees/uut/op_etage3" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">op_etage3[7:0]</obj_property>
          <obj_property name="ObjectShortName">op_etage3[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/a_etage3" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">a_etage3[7:0]</obj_property>
+         <obj_property name="ObjectShortName">a_etage3[7:0]</obj_property>
       </wvobject>
       <wvobject fp_name="/testchemindonnees/uut/b_etage3" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">b_etage3[7:0]</obj_property>
@@ -93,17 +89,21 @@
          <obj_property name="ElementShortName">c_etage3[7:0]</obj_property>
          <obj_property name="ObjectShortName">c_etage3[7:0]</obj_property>
       </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/s_ual_etage3" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">s_ual_etage3[7:0]</obj_property>
+         <obj_property name="ObjectShortName">s_ual_etage3[7:0]</obj_property>
+      </wvobject>
    </wvobject>
    <wvobject fp_name="group29" type="group">
       <obj_property name="label">etage4</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <wvobject fp_name="/testchemindonnees/uut/a_etage4" type="array" db_ref_id="1">
-         <obj_property name="ElementShortName">a_etage4[7:0]</obj_property>
-         <obj_property name="ObjectShortName">a_etage4[7:0]</obj_property>
-      </wvobject>
       <wvobject fp_name="/testchemindonnees/uut/op_etage4" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">op_etage4[7:0]</obj_property>
          <obj_property name="ObjectShortName">op_etage4[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/a_etage4" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">a_etage4[7:0]</obj_property>
+         <obj_property name="ObjectShortName">a_etage4[7:0]</obj_property>
       </wvobject>
       <wvobject fp_name="/testchemindonnees/uut/b_etage4" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">b_etage4[7:0]</obj_property>
@@ -117,13 +117,13 @@
    <wvobject fp_name="group30" type="group">
       <obj_property name="label">etage5</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <wvobject fp_name="/testchemindonnees/uut/a_etage5" type="array" db_ref_id="1">
-         <obj_property name="ElementShortName">a_etage5[7:0]</obj_property>
-         <obj_property name="ObjectShortName">a_etage5[7:0]</obj_property>
-      </wvobject>
       <wvobject fp_name="/testchemindonnees/uut/op_etage5" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">op_etage5[7:0]</obj_property>
          <obj_property name="ObjectShortName">op_etage5[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/a_etage5" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">a_etage5[7:0]</obj_property>
+         <obj_property name="ObjectShortName">a_etage5[7:0]</obj_property>
       </wvobject>
       <wvobject fp_name="/testchemindonnees/uut/b_etage5" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">b_etage5[7:0]</obj_property>
@@ -134,17 +134,97 @@
          <obj_property name="ObjectShortName">c_etage5[7:0]</obj_property>
       </wvobject>
    </wvobject>
-   <wvobject fp_name="/testchemindonnees/uut/MemInstruction/compteur" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">compteur[7:0]</obj_property>
-      <obj_property name="ObjectShortName">compteur[7:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
    <wvobject fp_name="/testchemindonnees/uut/BancRegistre/br" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">br[0:15]</obj_property>
       <obj_property name="ObjectShortName">br[0:15]</obj_property>
+      <wvobject fp_name="/testchemindonnees/uut/BancRegistre/br[0]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[0]</obj_property>
+         <obj_property name="ObjectShortName">br[0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/BancRegistre/br[1]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[1]</obj_property>
+         <obj_property name="ObjectShortName">br[1]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/BancRegistre/br[2]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[2]</obj_property>
+         <obj_property name="ObjectShortName">br[2]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/BancRegistre/br[3]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[3]</obj_property>
+         <obj_property name="ObjectShortName">br[3]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/BancRegistre/br[4]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[4]</obj_property>
+         <obj_property name="ObjectShortName">br[4]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/BancRegistre/br[5]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[5]</obj_property>
+         <obj_property name="ObjectShortName">br[5]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/BancRegistre/br[6]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[6]</obj_property>
+         <obj_property name="ObjectShortName">br[6]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/BancRegistre/br[7]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[7]</obj_property>
+         <obj_property name="ObjectShortName">br[7]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/BancRegistre/br[8]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[8]</obj_property>
+         <obj_property name="ObjectShortName">br[8]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/BancRegistre/br[9]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[9]</obj_property>
+         <obj_property name="ObjectShortName">br[9]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/BancRegistre/br[10]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[10]</obj_property>
+         <obj_property name="ObjectShortName">br[10]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/BancRegistre/br[11]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[11]</obj_property>
+         <obj_property name="ObjectShortName">br[11]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/BancRegistre/br[12]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[12]</obj_property>
+         <obj_property name="ObjectShortName">br[12]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/BancRegistre/br[13]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[13]</obj_property>
+         <obj_property name="ObjectShortName">br[13]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/BancRegistre/br[14]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[14]</obj_property>
+         <obj_property name="ObjectShortName">br[14]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/BancRegistre/br[15]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[15]</obj_property>
+         <obj_property name="ObjectShortName">br[15]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
    </wvobject>
    <wvobject fp_name="/testchemindonnees/uut/bulle" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">bulle</obj_property>
       <obj_property name="ObjectShortName">bulle</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testchemindonnees/uut/MemInstruction/compteur" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">compteur[7:0]</obj_property>
+      <obj_property name="ObjectShortName">compteur[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
 </wave_config>

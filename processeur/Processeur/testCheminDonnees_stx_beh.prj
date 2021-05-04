@@ -1,0 +1,7 @@
+vhdl isim_temp "Memoire_Instructions.vhd"
+vhdl isim_temp "Memoire_Donnees.vhd"
+vhdl isim_temp "Etage_Pipeline.vhd"
+vhdl isim_temp "Banc_Registres.vhd"
+vhdl isim_temp "ALU.vhd"
+vhdl isim_temp "Chemin_Donnees.vhd"
+vhdl isim_temp "testCheminDonnees.vhd"

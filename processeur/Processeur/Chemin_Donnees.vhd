@@ -104,13 +104,6 @@ architecture Behavioral of Chemin_Donnees is
 	signal null13 : STD_LOGIC := '0';
 	signal null14 : STD_LOGIC := '0';
 	signal null8 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
-	signal null81 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
-	signal null83 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
-	signal null84 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
-	signal null85 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
-	signal null86 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
-	signal null87 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
-	signal S_UAL_etage3 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null89 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null8A : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null8B : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
@@ -119,10 +112,19 @@ architecture Behavioral of Chemin_Donnees is
 	signal null8E : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null8F : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null8G : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
-	
-	signal null3 : STD_LOGIC_VECTOR(2 downto 0) := (others=>'0');
-	signal null4 : STD_LOGIC_VECTOR(3 downto 0) := (others=>'0');
 
+-- Constantes
+
+	constant NOP   : STD_LOGIC_VECTOR(7 downto 0):="00000000";
+	constant ADD   : STD_LOGIC_VECTOR(7 downto 0):="00000001";
+	constant MUL   : STD_LOGIC_VECTOR(7 downto 0):="00000010";
+	constant SOU   : STD_LOGIC_VECTOR(7 downto 0):="00000011";
+	constant DIV   : STD_LOGIC_VECTOR(7 downto 0):="00000100";
+	constant COP   : STD_LOGIC_VECTOR(7 downto 0):="00000101";
+	constant AFC   : STD_LOGIC_VECTOR(7 downto 0):="00000110";
+	constant LOAD  : STD_LOGIC_VECTOR(7 downto 0):="00000111";
+	constant STORE : STD_LOGIC_VECTOR(7 downto 0):="00001000";
+	
 -- General
 
 	signal bulle : STD_LOGIC := '0';
@@ -141,6 +143,7 @@ architecture Behavioral of Chemin_Donnees is
 	signal b_etage2 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal c_etage2 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal QAout : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
+	signal QBout : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal mux_out_etage2 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 -- Etage 3
 
@@ -149,6 +152,7 @@ architecture Behavioral of Chemin_Donnees is
 	signal b_etage3 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal c_etage3 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal mux_out_etage3 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
+	signal S_UAL_etage3 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 -- Etage 4
 
 	signal a_etage4 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
@@ -189,7 +193,7 @@ begin
 		Aout => a_etage2,
 		OPout => op_etage2,
 		Bout => b_etage2,
-		Cout => null81,
+		Cout => c_etage2,
 		CLK => CLK
 	);
 	
@@ -197,45 +201,43 @@ begin
 	
 	BancRegistre : Banc_Registres PORT MAP (
 		 A => b_etage1(3 downto 0),
-		 B => null4,
+		 B => c_etage2(3 downto 0),
 		 aW => a_etage5(3 downto 0),
 		 W => lc_etage5,
 		 DATA => b_etage5,
 		 RST => RST,
 		 CLK => CLK,
 		 QA => QAout,
-		 QB => null83
+		 QB => QBout
 	  );
 	  
-	lc_etage5 <= '1' when op_etage5="00000110" or op_etage5="00000101" -- AFC or COP
+	lc_etage5 <= '1' when op_etage5=AFC or op_etage5=COP or op_etage5=ADD or op_etage5=MUL or op_etage5=SOU-- AFC or COP or ADD or SOU or MUL
 				else '0'; 
 	
-	mux_out_etage2 <= QAout when op_etage2="00000101" --COP
+	mux_out_etage2 <= QAout when op_etage2=COP --COP
 				else b_etage2; 
 				
-	bulle <= '1' when bulle='0' and (op_etage1="00000110" or op_etage1="00000101") and rising_edge(CLK)--ACF or COP
-				else '0' when bulle='1' and (op_etage4="00000110" or op_etage4="00000101") and rising_edge(CLK) --ACF or COP
+	bulle <= '1' when bulle='0' and (op_etage1=AFC or op_etage1=COP or op_etage1=ADD or op_etage1=MUL or op_etage1=SOU) and rising_edge(CLK)--AFC or COP or ADD or SOU or MUL
+				else '0' when bulle='1' and (op_etage4=AFC or op_etage4=COP or op_etage4=ADD or op_etage4=MUL or op_etage4=SOU) and rising_edge(CLK) --AFC or COP or ADD or SOU or MUL
 				else bulle;
-	--'1' when op_etage1="00000110" or op_etage1="00000101" --ACF or COP
-		--	else '0';
 	
 	DIEX : Etage_Pipeline PORT MAP(
 		A => a_etage2,
 		OP => op_etage2,
 		B => mux_out_etage2,
-		C => null84,
+		C => QBout,
 		Aout => a_etage3,
 		OPout => op_etage3,
 		Bout => b_etage3,
-		Cout => null85,
+		Cout => c_etage3,
 		CLK => CLK
 	);
 	
 -- Etage 3
 
 	UAL : ALU PORT MAP (
-	 A => null86,
-	 B => null87,
+	 A => b_etage3,
+	 B => c_etage3,
 	 Ctrl_Alu => op_etage3(2 downto 0), --LC_etage3
 	 S => S_UAL_etage3,
 	 N => null1,
@@ -245,13 +247,13 @@ begin
   );
   
   
-  mux_out_etage3 <= S_UAL_etage3 when op_etage3="00000001" or op_etage3="00000010" or op_etage3="00000011" --ADD SOU MUL DIV
+  mux_out_etage3 <= S_UAL_etage3 when op_etage3=ADD or op_etage3=MUL or op_etage3=SOU --ADD SOU MUL (DIV)
 				else b_etage3; 
 
 	EXMEM : Etage_Pipeline PORT MAP(
 		A => a_etage3,
 		OP => op_etage3,
-		B => b_etage3,
+		B => mux_out_etage3,
 		C => null89,
 		Aout => a_etage4,
 		OPout => op_etage4,

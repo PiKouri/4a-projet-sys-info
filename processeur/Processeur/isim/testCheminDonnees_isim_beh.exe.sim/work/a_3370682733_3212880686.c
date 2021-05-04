@@ -21,7 +21,7 @@
 #include <malloc.h>
 #define alloca _alloca
 #endif
-static const char *ng0 = "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/Memoire_Donnees.vhd";
+static const char *ng0 = "/home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/Memoire_Donnees.vhd";
 extern char *IEEE_P_2592010699;
 extern char *IEEE_P_1242562249;
 
@@ -73,7 +73,7 @@ LAB3:    t4 = (t0 + 1992U);
     t8 = *((char **)t4);
     t4 = (t0 + 1032U);
     t9 = *((char **)t4);
-    t4 = (t0 + 6376U);
+    t4 = (t0 + 6400U);
     t10 = ieee_p_1242562249_sub_17802405650254020620_1035706684(IEEE_P_1242562249, t9, t4);
     t11 = (t10 - 0);
     t12 = (t11 * 1);
@@ -181,7 +181,7 @@ LAB10:    xsi_set_current_line(55, ng0);
     t4 = *((char **)t1);
     t1 = (t0 + 1032U);
     t7 = *((char **)t1);
-    t1 = (t0 + 6376U);
+    t1 = (t0 + 6400U);
     t17 = ieee_p_1242562249_sub_17802405650254020620_1035706684(IEEE_P_1242562249, t7, t1);
     t18 = (t17 - 0);
     t8 = (t18 * 1);
