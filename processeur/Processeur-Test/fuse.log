@@ -1,0 +1,34 @@
+Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/ise/processeur/Processeur-Test/testCheminDonnees_isim_beh.exe -prj /home/ise/processeur/Processeur-Test/testCheminDonnees_beh.prj work.testCheminDonnees 
+ISim P.20131013 (signature 0xfbc00daa)
+Number of CPUs detected in this system: 1
+Turning on mult-threading, number of parallel sub-compilation jobs: 0 
+Determining compilation order of HDL files
+Parsing VHDL file "/home/ise/processeur/Processeur-Test/Memoire_Instructions.vhd" into library work
+Parsing VHDL file "/home/ise/processeur/Processeur-Test/Memoire_Donnees.vhd" into library work
+Parsing VHDL file "/home/ise/processeur/Processeur-Test/Etage_Pipeline.vhd" into library work
+Parsing VHDL file "/home/ise/processeur/Processeur-Test/Banc_Registres.vhd" into library work
+Parsing VHDL file "/home/ise/processeur/Processeur-Test/ALU.vhd" into library work
+Parsing VHDL file "/home/ise/processeur/Processeur-Test/Chemin_Donnees.vhd" into library work
+Parsing VHDL file "/home/ise/processeur/Processeur-Test/testCheminDonnees.vhd" into library work
+Starting static elaboration
+Completed static elaboration
+Fuse Memory Usage: 98460 KB
+Fuse CPU Usage: 1040 ms
+Compiling package standard
+Compiling package std_logic_1164
+Compiling package numeric_std
+Compiling package std_logic_arith
+Compiling package std_logic_unsigned
+Compiling architecture behavioral of entity Memoire_Instructions [memoire_instructions_default]
+Compiling architecture behavioral of entity Etage_Pipeline [etage_pipeline_default]
+Compiling architecture behavioral of entity Banc_Registres [banc_registres_default]
+Compiling architecture behavioral of entity ALU [alu_default]
+Compiling architecture behavioral of entity Memoire_Donnees [memoire_donnees_default]
+Compiling architecture behavioral of entity Chemin_Donnees [chemin_donnees_default]
+Compiling architecture behavior of entity testchemindonnees
+Time Resolution for simulation is 1ps.
+Compiled 18 VHDL Units
+Built simulation executable /home/ise/processeur/Processeur-Test/testCheminDonnees_isim_beh.exe
+Fuse Memory Usage: 117516 KB
+Fuse CPU Usage: 1350 ms
+GCC CPU Usage: 3250 ms
