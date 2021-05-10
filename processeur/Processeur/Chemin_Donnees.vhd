@@ -32,7 +32,7 @@ use IEEE.NUMERIC_STD.ALL;
 entity Chemin_Donnees is
     Port ( CLK : in  STD_LOGIC;
            RST : in  STD_LOGIC;
-           pOUT : out  STD_LOGIC_VECTOR (7 downto 0));
+           pOUT : out STD_LOGIC_VECTOR (7 downto 0));
 end Chemin_Donnees;
 
 architecture Behavioral of Chemin_Donnees is
@@ -102,13 +102,9 @@ architecture Behavioral of Chemin_Donnees is
 	signal null11 : STD_LOGIC := '0';
 	signal null12 : STD_LOGIC := '0';
 	signal null13 : STD_LOGIC := '0';
-	signal null14 : STD_LOGIC := '0';
 	signal null8 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null89 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null8A : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
-	signal null8B : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
-	signal null8C : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
-	signal null8D : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null8E : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null8F : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null8G : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
@@ -124,10 +120,19 @@ architecture Behavioral of Chemin_Donnees is
 	constant AFC   : STD_LOGIC_VECTOR(7 downto 0):="00000110";
 	constant LOAD  : STD_LOGIC_VECTOR(7 downto 0):="00000111";
 	constant STORE : STD_LOGIC_VECTOR(7 downto 0):="00001000";
+	constant PRINT : STD_LOGIC_VECTOR(7 downto 0):="00001001";
 	
 -- General
 
+	-- Aleas
+
 	signal bulle : STD_LOGIC := '0';
+	signal bulle_synchrone : STD_LOGIC := '0';
+	
+	signal alea_MemIns_read_b : STD_LOGIC :='0';
+	signal alea_MemIns_read_c : STD_LOGIC :='0';
+	signal alea_p1_write_a : STD_LOGIC :='0';
+	signal alea_p2_write_a : STD_LOGIC :='0';
 	
 -- Etage 1
 
@@ -158,7 +163,11 @@ architecture Behavioral of Chemin_Donnees is
 	signal a_etage4 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal op_etage4 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal b_etage4 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
-	signal c_etage4 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
+	signal c_etage4 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');	
+	signal pOUT_etage4 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
+	signal mux_in_etage4 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
+	signal mux_out_etage4 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
+	signal lc_etage4 : STD_LOGIC := '1';
 	
 -- Etage 5
 
@@ -167,6 +176,9 @@ architecture Behavioral of Chemin_Donnees is
 	signal b_etage5 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal c_etage5 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal lc_etage5 : STD_LOGIC := '0';
+	signal pout_print : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');	
+	
+	
 	
 begin
 
@@ -178,7 +190,7 @@ begin
 		SENS => '1',
       CK => CLK,
       RST => RST,
-		EN => bulle,
+		EN => bulle_synchrone,
 		Aout => a_etage1,
 		OPout => op_etage1,
 		Bout => b_etage1,
@@ -200,7 +212,7 @@ begin
 -- Etage 2
 	
 	BancRegistre : Banc_Registres PORT MAP (
-		 A => b_etage1(3 downto 0),
+		 A => b_etage2(3 downto 0),
 		 B => c_etage2(3 downto 0),
 		 aW => a_etage5(3 downto 0),
 		 W => lc_etage5,
@@ -211,16 +223,36 @@ begin
 		 QB => QBout
 	  );
 	  
-	lc_etage5 <= '1' when op_etage5=AFC or op_etage5=COP or op_etage5=ADD or op_etage5=MUL or op_etage5=SOU-- AFC or COP or ADD or SOU or MUL
+	lc_etage5 <= '1' when op_etage5=AFC or op_etage5=COP or op_etage5=ADD or op_etage5=MUL or op_etage5=SOU or op_etage5=LOAD-- AFC or COP or ADD or SOU or MUL or LOAD
 				else '0'; 
 	
-	mux_out_etage2 <= QAout when op_etage2=COP --COP
-				else b_etage2; 
-				
-	bulle <= '1' when bulle='0' and (op_etage1=AFC or op_etage1=COP or op_etage1=ADD or op_etage1=MUL or op_etage1=SOU) and rising_edge(CLK)--AFC or COP or ADD or SOU or MUL
-				else '0' when bulle='1' and (op_etage4=AFC or op_etage4=COP or op_etage4=ADD or op_etage4=MUL or op_etage4=SOU) and rising_edge(CLK) --AFC or COP or ADD or SOU or MUL
-				else bulle;
+	mux_out_etage2 <= QAout when op_etage2=COP or op_etage2=ADD or op_etage2=MUL or op_etage2=SOU or op_etage2=STORE or op_etage2=PRINT--COP or ADD or SOU or MUL or STORE or PRINT
+				else b_etage2;
 	
+--	bulle_synchrone <= '1' when bulle_synchrone='0' and (op_etage1=AFC or op_etage1=COP or op_etage1=ADD or op_etage1=MUL or op_etage1=SOU or op_etage1=STORE) and rising_edge(CLK)--AFC or COP or ADD or SOU or MUL or STORE
+--				else '0' when bulle_synchrone='1' and (op_etage4=AFC or op_etage4=COP or op_etage4=ADD or op_etage4=MUL or op_etage4=SOU or op_etage4=STORE) and rising_edge(CLK) --AFC or COP or ADD or SOU or MUL or STORE
+--				else bulle_synchrone;
+				
+	alea_MemIns_read_b <= '0' when op_etage1=AFC or op_etage1=LOAD or op_etage1=NOP
+								else '1';
+	alea_MemIns_read_c <= '1' when op_etage1=ADD or op_etage1=SOU or op_etage1=MUL
+								else '0';
+	alea_p1_write_a <= '0' when op_etage2=STORE or op_etage2=NOP
+								else '1';
+	alea_p2_write_a <= '0' when op_etage3=STORE or op_etage3=NOP
+								else '1';
+								
+	bulle <= '1' when ((alea_MemIns_read_b='1' and alea_p1_write_a='1' and b_etage1=a_etage2 ) 
+						or (alea_MemIns_read_c='1' and alea_p1_write_a='1' and c_etage1=a_etage2 ) 
+						
+						or (alea_MemIns_read_b='1' and alea_p2_write_a='1' and b_etage1=a_etage3 ) 
+						or (alea_MemIns_read_c='1' and alea_p2_write_a='1' and c_etage1=a_etage3 ))
+			else '0';
+	
+	bulle_synchrone <= '1' when bulle_synchrone='0' and bulle='1'
+							else '0' when bulle_synchrone='1' and bulle='0' and rising_edge(CLK)
+							else bulle_synchrone;
+				
 	DIEX : Etage_Pipeline PORT MAP(
 		A => a_etage2,
 		OP => op_etage2,
@@ -264,19 +296,29 @@ begin
 	
 -- Etage 4
 
+	mux_in_etage4 <= a_etage4 when op_etage4=STORE
+						else b_etage4;
+
+	lc_etage4 <= '0' when op_etage4=STORE 
+			else '1';
+
 	MemDonnees : Memoire_Donnees PORT MAP (
-		 addr => null8B,
-		 pIN => null8C,
-		 RW => null14,
+		 addr => mux_in_etage4,
+		 pIN => b_etage4,
+		 RW => lc_etage4,
 		 RST => RST,
 		 CLK => CLK,
-		 pOUT => null8D
+		 pOUT => pOUT_etage4
 	  );
+	  
+	  
+	mux_out_etage4 <= pOUT_etage4 when op_etage4=LOAD
+							else b_etage4;
 	
 	MEMRE : Etage_Pipeline PORT MAP(
 		A => a_etage4,
 		OP => op_etage4,
-		B => b_etage4,
+		B => mux_out_etage4,
 		C => null8E,
 		Aout => a_etage5,
 		OPout => op_etage5,
@@ -287,7 +329,10 @@ begin
 
 -- Etage 5
 	
-	pOUT <= null8G;
+	pOUT_print <= b_etage5 when op_etage5=PRINT
+			else pOUT_print;
+			
+	pOUT<=pOUT_print;
 
 
 end Behavioral;

@@ -13,4 +13,5 @@ at 0 ps, Instance /testchemindonnees/uut/BancRegistre/ : Warning: NUMERIC_STD.TO
 at 0 ps, Instance /testchemindonnees/uut/BancRegistre/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 at 0 ps, Instance /testchemindonnees/uut/UAL/ : Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
 Finished circuit initialization process.
+at 0 ps, Instance /testchemindonnees/uut/MemDonnees/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 # exit 0

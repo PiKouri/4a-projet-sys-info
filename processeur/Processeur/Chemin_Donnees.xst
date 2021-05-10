@@ -1,5 +1,5 @@
-set -tmpdir "/home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/xst/projnav.tmp"
-set -xsthdpdir "/home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/xst"
+set -tmpdir "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/xst/projnav.tmp"
+set -xsthdpdir "/home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/xst"
 run -compileonly yes
 -p xc6slx16-3-csg324
 -top Chemin_Donnees

@@ -43,7 +43,7 @@ architecture Behavioral of Memoire_Donnees is
 	type memoire is array (0 to 255) of STD_LOGIC_VECTOR(7 downto 0);
 	signal mem : memoire:=(others=>(others=>'0'));
 begin
-	pOUT<=mem(TO_INTEGER(UNSIGNED(addr))) when rising_edge(CLK) and RW='1';
+	pOUT<=mem(TO_INTEGER(UNSIGNED(addr)));
 	
 	ps_write : process (CLK, RST, RW)
 	begin
