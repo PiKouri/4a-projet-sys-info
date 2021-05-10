@@ -1,5 +1,5 @@
 ISim log file
-Running: /home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/testCheminDonnees_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -view /home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/chemin_donnees.wcfg -wdb /home/vsaulnie/Bureau/4A/S2/Projet_SI/processeur/Processeur/testCheminDonnees_isim_beh.wdb 
+Running: /home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/testCheminDonnees_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -view /home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/chemin_donnees.wcfg -wdb /home/hok/4A/PSI/4a-projet-sys-info/processeur/Processeur/testCheminDonnees_isim_beh.wdb 
 ISim O.87xd (signature 0x8ddf5b5d)
 WARNING: A WEBPACK license was found.
 WARNING: Please use Xilinx License Configuration Manager to check out a full ISim license.
