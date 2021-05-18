@@ -3,6 +3,9 @@
 ## 1 - Compilateur 
 La partie compilateur se trouve dans le dossier compilateur/  
 Il prend en entrée un fichier au language de type C, puis produit un fihcier au language assembleur orienté mémoire.
+Makefile : 
+  * make run 
+  * make execute
 Particularités : 
   * _tmp{i} pour les variables temporaires
 
