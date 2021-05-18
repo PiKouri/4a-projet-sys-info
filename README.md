@@ -1,11 +1,11 @@
 # Projet de Système Informatique
 ### Jean-Rémy Hok - Valentin Saulnier / Groupe A1 / Année 2020 - 2021  
 ## 1 - Compilateur 
-La partie compilateur se trouve dans le dossier compilateur/  
-Il prend en entrée un fichier au language de type C, puis produit un fihcier au language assembleur orienté mémoire.
+La partie compilateur se trouve dans le dossier compilateur/ <br>
+Il prend en entrée un fichier au language de type C, puis produit un fihcier au language assembleur orienté mémoire. <br>
 Makefile : 
   * make run 
-  * make execute
+  * make execute <br>
 Particularités : 
   * _tmp{i} pour les variables temporaires
 
