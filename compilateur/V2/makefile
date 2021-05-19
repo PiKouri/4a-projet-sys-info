@@ -11,29 +11,33 @@ compilateur: ./src/compilateur.y ./src/compilateur.l ./src/symbol_table.c
 	lex ./src/compilateur.l
 	gcc ./src/symbol_table.c lex.yy.c y.tab.c -Isrc -o compilateur
 
-run : compile
-
 clean:
 	rm -f ex_lex lex.yy.c compilateur y.tab.h y.tab.c *.o
 
+run : compile 
+ifdef SRC
+	make execute SRC=$(subst .myc,.asm,$(SRC))
+else
+	make execute
+endif
+	
+
 compile: compilateur
-	./compilateur < input_myc/input.myc
+ifdef SRC
+	./compilateur < input_myc/$(SRC)
+	rm -f -- output_asm/$(subst .myc,.asm,$(SRC))
+	mv output_asm/output.asm output_asm/$(subst .myc,.asm,$(SRC))
+else
+	./compilateur < input_myc/default.myc
+	rm -f -- output_asm/default.asm
+	mv output_asm/output.asm output_asm/default.asm
+endif
 
-compile_pgcd: compilateur
-	./compilateur < input_myc/pgcd.myc
+execute :
+ifdef SRC
+	./../../interpreter/interpreter < output_asm/$(SRC)
+else
+	./../../interpreter/interpreter < output_asm/default.asm
+endif
 
-execute : 
-	./../../interpreter/interpreter < output_asm/output.asm
-
-test_pgcd_12 : compilateur
-	./compilateur < input_myc/pgcd.myc
-	./../../interpreter/interpreter < output_asm/output.asm
-
-test_pgcd_7 : compilateur
-	./compilateur < input_myc/pgcd_7.myc
-	./../../interpreter/interpreter < output_asm/output.asm
-
-test_pgcd_1 : compilateur
-	./compilateur < input_myc/pgcd_1.myc
-	./../../interpreter/interpreter < output_asm/output.asm
 
