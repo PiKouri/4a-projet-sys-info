@@ -43,7 +43,7 @@ architecture Behavioral of Chemin_Donnees is
          CK : IN  std_logic;
          RST : IN  std_logic;
          EN : IN  std_logic;
-         LOAD : IN  std_logic;
+         pLOAD : IN  std_logic;
          SENS : IN  std_logic;
          Aout : OUT  std_logic_vector(7 downto 0);
          OPout : OUT  std_logic_vector(7 downto 0);
@@ -102,7 +102,6 @@ architecture Behavioral of Chemin_Donnees is
 	signal null11 : STD_LOGIC := '0';
 	signal null12 : STD_LOGIC := '0';
 	signal null13 : STD_LOGIC := '0';
-	signal null8 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null89 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null8A : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal null8E : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
@@ -115,12 +114,19 @@ architecture Behavioral of Chemin_Donnees is
 	constant ADD   : STD_LOGIC_VECTOR(7 downto 0):="00000001";
 	constant MUL   : STD_LOGIC_VECTOR(7 downto 0):="00000010";
 	constant SOU   : STD_LOGIC_VECTOR(7 downto 0):="00000011";
-	constant DIV   : STD_LOGIC_VECTOR(7 downto 0):="00000100";
-	constant COP   : STD_LOGIC_VECTOR(7 downto 0):="00000101";
-	constant AFC   : STD_LOGIC_VECTOR(7 downto 0):="00000110";
-	constant LOAD  : STD_LOGIC_VECTOR(7 downto 0):="00000111";
-	constant STORE : STD_LOGIC_VECTOR(7 downto 0):="00001000";
-	constant PRINT : STD_LOGIC_VECTOR(7 downto 0):="00001001";
+	constant INF	: STD_LOGIC_VECTOR(7 downto 0):="00000100";
+	constant SUP	: STD_LOGIC_VECTOR(7 downto 0):="00000101";
+	constant EQU	: STD_LOGIC_VECTOR(7 downto 0):="00000110";
+	
+	constant DIV   : STD_LOGIC_VECTOR(7 downto 0):="00000111";
+	constant COP   : STD_LOGIC_VECTOR(7 downto 0):="00001000";
+	constant AFC   : STD_LOGIC_VECTOR(7 downto 0):="00001001";
+	constant LOAD  : STD_LOGIC_VECTOR(7 downto 0):="00001010";
+	constant STORE : STD_LOGIC_VECTOR(7 downto 0):="00001011";
+	
+	constant PRINT : STD_LOGIC_VECTOR(7 downto 0):="00001100";
+	constant JMP 	: STD_LOGIC_VECTOR(7 downto 0):="00001101";
+	constant JMF 	: STD_LOGIC_VECTOR(7 downto 0):="00001110";
 	
 -- General
 
@@ -133,6 +139,7 @@ architecture Behavioral of Chemin_Donnees is
 	signal alea_MemIns_read_c : STD_LOGIC :='0';
 	signal alea_p1_write_a : STD_LOGIC :='0';
 	signal alea_p2_write_a : STD_LOGIC :='0';
+	signal bulle_jmf : STD_LOGIC :='0';
 	
 -- Etage 1
 
@@ -140,6 +147,8 @@ architecture Behavioral of Chemin_Donnees is
 	signal op_etage1 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal b_etage1 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal c_etage1 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
+	signal jump_to : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
+	signal jump : STD_LOGIC := '0';
 	
 -- Etage 2
 
@@ -150,6 +159,7 @@ architecture Behavioral of Chemin_Donnees is
 	signal QAout : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal QBout : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
 	signal mux_out_etage2 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
+	signal mux_a_in_br : STD_LOGIC_VECTOR(3 downto 0) := (others=>'0');
 -- Etage 3
 
 	signal a_etage3 : STD_LOGIC_VECTOR(7 downto 0) := (others=>'0');
@@ -184,9 +194,20 @@ begin
 
 -- Etage 1
 
+-- JUMP
+
+	jump <= '1' when op_etage1 = JMP or (op_etage1 = JMF and QAout = "00000000")
+					else '0';
+	jump_to <= a_etage1-"00000001" when op_etage1 = JMP else
+					a_etage1-"00000001" when (op_etage1 = JMF and QAout = "00000000")
+					else "00000000";
+
+	mux_a_in_br <= b_etage1 (3 downto 0) when (op_etage1=JMF)
+						else b_etage2(3 downto 0);
+
 	MemInstruction : Memoire_Instructions PORT MAP(
-		DIN => null8,
-		LOAD => '0',
+		DIN => jump_to,
+		pLOAD => jump,
 		SENS => '1',
       CK => CLK,
       RST => RST,
@@ -212,7 +233,7 @@ begin
 -- Etage 2
 	
 	BancRegistre : Banc_Registres PORT MAP (
-		 A => b_etage2(3 downto 0),
+		 A => mux_a_in_br,
 		 B => c_etage2(3 downto 0),
 		 aW => a_etage5(3 downto 0),
 		 W => lc_etage5,
@@ -224,18 +245,24 @@ begin
 	  );
 	  
 	lc_etage5 <= '1' when op_etage5=AFC or op_etage5=COP or op_etage5=ADD or op_etage5=MUL or op_etage5=SOU or op_etage5=LOAD-- AFC or COP or ADD or SOU or MUL or LOAD
+				or op_etage5=SUP or op_etage5=EQU or op_etage5=INF
 				else '0'; 
 	
 	mux_out_etage2 <= QAout when op_etage2=COP or op_etage2=ADD or op_etage2=MUL or op_etage2=SOU or op_etage2=STORE or op_etage2=PRINT--COP or ADD or SOU or MUL or STORE or PRINT
+				or op_etage2=SUP or op_etage2=EQU or op_etage2=INF or op_etage2=JMF
 				else b_etage2;
 	
 --	bulle_synchrone <= '1' when bulle_synchrone='0' and (op_etage1=AFC or op_etage1=COP or op_etage1=ADD or op_etage1=MUL or op_etage1=SOU or op_etage1=STORE) and rising_edge(CLK)--AFC or COP or ADD or SOU or MUL or STORE
 --				else '0' when bulle_synchrone='1' and (op_etage4=AFC or op_etage4=COP or op_etage4=ADD or op_etage4=MUL or op_etage4=SOU or op_etage4=STORE) and rising_edge(CLK) --AFC or COP or ADD or SOU or MUL or STORE
 --				else bulle_synchrone;
 				
+	--bulle_jmf <= '1' when bulle_jmf='0' and op_etage2=JMF else
+	--				'0' when bulle_jmf='1' and (op_etage5=JMF and op_etage1 /= JMF)
+	--				else bulle_jmf;
+				
 	alea_MemIns_read_b <= '0' when op_etage1=AFC or op_etage1=LOAD or op_etage1=NOP
 								else '1';
-	alea_MemIns_read_c <= '1' when op_etage1=ADD or op_etage1=SOU or op_etage1=MUL
+	alea_MemIns_read_c <= '1' when op_etage1=ADD or op_etage1=SOU or op_etage1=MUL or op_etage1=SUP or op_etage1=EQU or op_etage1=INF
 								else '0';
 	alea_p1_write_a <= '0' when op_etage2=STORE or op_etage2=NOP
 								else '1';
@@ -247,6 +274,8 @@ begin
 						
 						or (alea_MemIns_read_b='1' and alea_p2_write_a='1' and b_etage1=a_etage3 ) 
 						or (alea_MemIns_read_c='1' and alea_p2_write_a='1' and c_etage1=a_etage3 ))
+						
+	--					or bulle_jmf='1'
 			else '0';
 	
 	bulle_synchrone <= '1' when bulle_synchrone='0' and bulle='1'
@@ -280,6 +309,7 @@ begin
   
   
   mux_out_etage3 <= S_UAL_etage3 when op_etage3=ADD or op_etage3=MUL or op_etage3=SOU --ADD SOU MUL (DIV)
+				or op_etage3=SUP or op_etage3=EQU or op_etage3=INF
 				else b_etage3; 
 
 	EXMEM : Etage_Pipeline PORT MAP(

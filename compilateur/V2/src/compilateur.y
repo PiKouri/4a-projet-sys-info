@@ -166,21 +166,21 @@ FILE:
 		{printTable(&table);printf("-----ZONE D'INSTRUCTIONS-----\n");} INSTRUCTIONS tAF 
 		{printf("-----FIN-----\n");printTable(&table); fclose(fptr);};
 
-DECLARATIONS :
+DECLARATIONS:
 	/* epsilon */
 	| {printf("DECLARATION ");} DECLARATION DECLARATIONS
 	;
 
-DECLARATION : 
+DECLARATION: 
 	TYPE ID_SET tPOINTVIRGULE {printf("\n");}
 	;
 
-TYPE : 
+TYPE: 
 	tCONST {printf("CONST : ");lasttype=CONST;}
 	| tINT {printf("INT : ");lasttype=INT;}
 	;
 
-ID_SET : 
+ID_SET: 
 ID_EGAL EXPRESSION {printf("%s<-%s",$1,$2); affectation($1,1);}
 	| tID tVIRGULE 
 		{printf("%s,",$1);
@@ -193,16 +193,16 @@ ID_EGAL EXPRESSION {printf("%s<-%s",$1,$2); affectation($1,1);}
 		pushEntry(&table,lasttype,$1);}
 	;
 
-ID_EGAL :
+ID_EGAL:
     tID tEGAL {pushEntry(&table,lasttype,$1);strncpy($$,$1,STRLENGTH);} 
     ;
 
-INSTRUCTIONS : 
+INSTRUCTIONS: 
 	/* epsilon */
 	| INSTRUCTION INSTRUCTIONS 
 	;
 
-INSTRUCTION : 
+INSTRUCTION: 
 	  {printf("BLOC BEGIN\n");} BLOC {printf("BLOC END\n");}
 	| EXPRESSION tPOINTVIRGULE {printf("INSTRUCTION %s;\n",$1);}
 	| IF INSTRUCTION {fprintf(fptr, "JMP ?\n"); asmLineCount++;replaceTokenAtLine(get_nb_lignes_asm(),$1); printf("ELSE ");} ELSE INSTRUCTION {replaceTokenAtLine(get_nb_lignes_asm(),$4);}
@@ -210,9 +210,9 @@ INSTRUCTION :
 	| WHILE WHILE_CONDITION INSTRUCTION {fprintf(fptr, "JMP %d\n",$1);asmLineCount++;replaceTokenAtLine(get_nb_lignes_asm(),$2);}
 	;
 
-BLOC : tAO INSTRUCTIONS tAF;
+BLOC: tAO INSTRUCTIONS tAF;
 
-IF : tIF tPO EXPRESSION tPF 
+IF: tIF tPO EXPRESSION tPF 
 		{
 			printf("IF (%s) ",$3);
 			int tmp = popEntry(&table);
@@ -221,11 +221,11 @@ IF : tIF tPO EXPRESSION tPF
 			asmLineCount++;
 		};
 
-ELSE : tELSE {$$=get_nb_lignes_asm()-1;};
+ELSE: tELSE {$$=get_nb_lignes_asm()-1;};
 
-WHILE : tWHILE {$$ = get_nb_lignes_asm() ;};
+WHILE: tWHILE {$$ = get_nb_lignes_asm() ;};
 
-WHILE_CONDITION : tPO EXPRESSION tPF 
+WHILE_CONDITION: tPO EXPRESSION tPF 
 		{
 			printf("WHILE (%s) ",$2);
 			int tmp = popEntry(&table);
@@ -234,7 +234,7 @@ WHILE_CONDITION : tPO EXPRESSION tPF
 			asmLineCount++;
 		};
 
-EXPRESSION :
+EXPRESSION:
 	tNB                                       {sprintf($$,"%d",$1);cst_to_vartemp($1);}
 	| tID tEGAL EXPRESSION                    {makeString($$,$1,"<-",$3);affectation($1,0);}
 	| tID                                     {makeString($$,$1,"","");var_to_vartemp($1);}

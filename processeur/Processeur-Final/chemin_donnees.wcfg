@@ -1537,6 +1537,10 @@
          <obj_property name="ElementShortName">bulle_synchrone</obj_property>
          <obj_property name="ObjectShortName">bulle_synchrone</obj_property>
       </wvobject>
+      <wvobject fp_name="/testchemindonnees/uut/bulle_jmf" type="logic" db_ref_id="1">
+         <obj_property name="ElementShortName">bulle_jmf</obj_property>
+         <obj_property name="ObjectShortName">bulle_jmf</obj_property>
+      </wvobject>
       <wvobject fp_name="/testchemindonnees/uut/alea_memins_read_b" type="logic" db_ref_id="1">
          <obj_property name="ElementShortName">alea_memins_read_b</obj_property>
          <obj_property name="ObjectShortName">alea_memins_read_b</obj_property>
